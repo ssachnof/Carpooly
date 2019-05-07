@@ -1,6 +1,6 @@
-#Carpooly Repo:
+# Carpooly Repo:
 
-Contributors:
+### Contributors:
 
 Samuel Sachnoff(ssachnof)
 
