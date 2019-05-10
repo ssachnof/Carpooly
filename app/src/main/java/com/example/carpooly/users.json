@@ -1,0 +1,10 @@
+{
+  "users" : {
+    "abcd" : {
+      "password" : "blah"
+    },
+    "user2" : {
+      "password" : "12345"
+    }
+  }
+}
