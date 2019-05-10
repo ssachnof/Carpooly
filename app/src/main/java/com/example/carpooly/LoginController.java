@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import java.io.FileInputStream;
+
 public class LoginController extends AppCompatActivity{
     public static final String USERNAME_MESSAGE = "username";
     public static final String PASSWORD_MESSAGE = "password";
@@ -21,7 +23,7 @@ public class LoginController extends AppCompatActivity{
         String username_message = username.getText().toString();
         String password_message = password.getText().toString();
         try{
-            boolean foundUser = LoginModel.isValidLoginCredentials(username_message, password_message);
+            boolean foundUser = LoginModel.isValidLoginCredentials(username_message, password_message, this);
             if (foundUser)
                 intent.putExtra(USERNAME_MESSAGE, "success!!!");
             else
