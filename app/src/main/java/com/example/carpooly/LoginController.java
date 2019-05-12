@@ -34,4 +34,9 @@ public class LoginController extends AppCompatActivity{
         }
         startActivity(intent);
     }
+
+    //transition to registration page
+    public void openRegPage(View view){
+        setContentView(R.layout.activity_registration);
+    }
 }
