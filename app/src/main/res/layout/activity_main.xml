@@ -49,7 +49,7 @@
         android:layout_marginEnd="128dp"
         android:layout_marginRight="128dp"
         android:layout_marginBottom="8dp"
-        android:onClick="sendMessage"
+        android:onClick="authenticateUser"
         android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

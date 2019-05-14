@@ -13,7 +13,7 @@ public class LoginView extends AppCompatActivity {
         setContentView(R.layout.activity_display_message);
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        String username = intent.getStringExtra(LoginController.USERNAME_MESSAGE);
+        String username = intent.getStringExtra(LoginController.CREDENTIALS);
 
         //display the username
         TextView textView1 = findViewById(R.id.textView1);
