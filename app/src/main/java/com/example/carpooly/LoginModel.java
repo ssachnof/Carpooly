@@ -23,7 +23,6 @@ import java.util.Scanner;
 
 public class LoginModel {
     public static boolean isValidLoginCredentials(String username, String pass, Context context) throws IOException {
-        System.out.println("RUNNING!!!!!!\n");
         String lines = "";
         JsonParser parser = new JsonParser();
         try {

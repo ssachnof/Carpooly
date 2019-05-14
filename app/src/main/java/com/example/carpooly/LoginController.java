@@ -9,14 +9,13 @@ import android.widget.EditText;
 import java.io.FileInputStream;
 
 public class LoginController extends AppCompatActivity{
-    public static final String USERNAME_MESSAGE = "username";
-    public static final String PASSWORD_MESSAGE = "password";
+    public static final String CREDENTIALS = "credentials";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-    public void sendMessage(View view){
+    public void authenticateUser(View view){
         Intent intent = new Intent(this, LoginView.class);
         EditText username = (EditText) findViewById(R.id.username);
         EditText password = (EditText) findViewById(R.id.password);
@@ -25,12 +24,12 @@ public class LoginController extends AppCompatActivity{
         try{
             boolean foundUser = LoginModel.isValidLoginCredentials(username_message, password_message, this);
             if (foundUser)
-                intent.putExtra(USERNAME_MESSAGE, "success!!!");
+                intent.putExtra(CREDENTIALS, "success!!!");
             else
-                intent.putExtra(USERNAME_MESSAGE, "failure!!!!");
+                intent.putExtra(CREDENTIALS, "failure!!!!");
         }
         catch (Exception e) {
-            intent.putExtra(USERNAME_MESSAGE, "exception!!!!");
+            intent.putExtra(CREDENTIALS, "exception!!!!");
         }
         startActivity(intent);
     }
