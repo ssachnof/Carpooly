@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import java.io.FileInputStream;
-
-public class LoginController extends AppCompatActivity{
+public class LoginUserActivity extends AppCompatActivity{
     public static final String CREDENTIALS = "credentials";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +14,7 @@ public class LoginController extends AppCompatActivity{
         setContentView(R.layout.activity_main);
     }
     public void authenticateUser(View view){
-        Intent intent = new Intent(this, LoginView.class);
+        Intent intent = new Intent(this, DisplayLoginMessage.class);
         EditText username = (EditText) findViewById(R.id.username);
         EditText password = (EditText) findViewById(R.id.password);
         String username_message = username.getText().toString();
@@ -33,9 +31,10 @@ public class LoginController extends AppCompatActivity{
         }
         startActivity(intent);
     }
-
-    //transition to registration page
     public void openRegPage(View view){
-        setContentView(R.layout.activity_registration);
+        Intent intent = new Intent(this, OpenRegPage.class);
+        startActivity(intent);
+
+
     }
 }
