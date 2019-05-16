@@ -27,7 +27,7 @@ public class OpenRegPage extends AppCompatActivity {
 
     public void displayRegMessage(View view) throws IOException {
         Intent intent = new Intent(this, DisplayLoginMessage.class);
-        intent.putExtra(LoginUserActivity.CREDENTIALS, "user successfully registered!!!!");
+        intent.putExtra(LoginUserActivity.getKey(), "user successfully registered!!!!");
         boolean result = model.createUser(username.getText().toString(),
                 password.getText().toString(), this);
         startActivity(intent);

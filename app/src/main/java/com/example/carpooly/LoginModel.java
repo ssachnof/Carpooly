@@ -1,6 +1,7 @@
 package com.example.carpooly;
 
 import android.content.Context;
+import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,7 +23,14 @@ import java.nio.file.Path;
 import java.util.Scanner;
 
 public class LoginModel {
-    public boolean isValidLoginCredentials(String username, String pass, Context context) throws IOException {
+    private String username;
+    private String pass;
+
+    public LoginModel(EditText username,EditText pass){
+        this.username = username.getText().toString();
+        this.pass = pass.getText().toString();
+    }
+    public boolean isValidLoginCredentials(Context context) throws IOException {
         String lines = "";
         JsonParser parser = new JsonParser();
         try {
