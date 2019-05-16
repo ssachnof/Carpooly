@@ -8,17 +8,18 @@ import android.widget.EditText;
 
 public class LoginUserActivity extends AppCompatActivity{
     private LoginModel model;
-    private static final String CREDENTIALS = "credentials";
+    public static final String CREDENTIALS = "credentials";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         EditText username = (EditText) findViewById(R.id.username);
+        System.out.println("USERNAME: " + username.getText().toString());
         EditText pass = (EditText) findViewById(R.id.password);
-        model = new LoginModel(username, pass);
+        this.model = new LoginModel(username, pass);
     }
 
-    public static String getKey(){return CREDENTIALS;}
+    //public static String getKey(){return CREDENTIALS;}
     public void authenticateUser(View view){
         Intent intent = new Intent(this, DisplayLoginMessage.class);
         try{
