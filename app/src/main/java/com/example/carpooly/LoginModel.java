@@ -26,7 +26,7 @@ public class LoginModel {
     private String username;
     private String pass;
 
-    public LoginModel(EditText username,EditText pass){
+    public LoginModel(EditText username, EditText pass){
         this.username = username.getText().toString();
         this.pass = pass.getText().toString();
     }
@@ -43,7 +43,8 @@ public class LoginModel {
             }
 
             JsonObject jo = (JsonObject) parser.parse(lines);
-            System.out.println("username: "+ username);
+            System.out.println("username: "+ this.username);
+            System.out.println("password: " + this.pass);
             System.out.println(jo.getAsJsonObject("users").toString());
             String db_username = jo.getAsJsonObject("users").get(username).toString();
             String db_password = jo.getAsJsonObject("users").getAsJsonObject(username).get("password").getAsString();
