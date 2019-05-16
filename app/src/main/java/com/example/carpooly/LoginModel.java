@@ -23,14 +23,7 @@ import java.nio.file.Path;
 import java.util.Scanner;
 
 public class LoginModel {
-    private String username;
-    private String pass;
-
-    public LoginModel(EditText username, EditText pass){
-        this.username = username.getText().toString();
-        this.pass = pass.getText().toString();
-    }
-    public boolean isValidLoginCredentials(Context context) throws IOException {
+    public static boolean isValidLoginCredentials(String username, String pass, Context context) throws IOException {
         String lines = "";
         JsonParser parser = new JsonParser();
         try {
@@ -43,9 +36,6 @@ public class LoginModel {
             }
 
             JsonObject jo = (JsonObject) parser.parse(lines);
-            System.out.println("username: "+ this.username);
-            System.out.println("password: " + this.pass);
-            System.out.println(jo.getAsJsonObject("users").toString());
             String db_username = jo.getAsJsonObject("users").get(username).toString();
             String db_password = jo.getAsJsonObject("users").getAsJsonObject(username).get("password").getAsString();
             fs.close();
