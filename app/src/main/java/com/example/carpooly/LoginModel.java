@@ -26,7 +26,7 @@ public class LoginModel {
         String lines = "";
         JsonParser parser = new JsonParser();
         try {
-            InputStream fs = context.getAssets().open("users.json");
+            InputStream fs = context.openFileInput("users.json");
             int max_size = fs.available();
 
             //read the input file byte by byte
