@@ -15,15 +15,14 @@ public class LoginUserActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        model = new LoginModel();
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
+        model = new LoginModel(username, password);
     }
     public void authenticateUser(View view){
         Intent intent = new Intent(this, DisplayLoginMessage.class);
         try{
-            boolean foundUser = model.isValidLoginCredentials(username.getText().toString(),
-                    password.getText().toString(), this);
+            boolean foundUser = model.isValidLoginCredentials(this);
             if (foundUser)
                 intent.putExtra(CREDENTIALS, "success!!!");
             else
