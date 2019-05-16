@@ -71,7 +71,7 @@
             android:ems="10"
             android:inputType="textPassword"
             android:text="Password"
-            app:layout_constraintBottom_toTopOf="@+id/editText7"
+            app:layout_constraintBottom_toTopOf="@+id/confirmPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView13"
             app:layout_constraintTop_toBottomOf="@+id/username" />
@@ -90,7 +90,7 @@
             app:layout_constraintTop_toTopOf="@+id/password" />
 
         <EditText
-            android:id="@+id/editText7"
+            android:id="@+id/confirmPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="13dp"
@@ -113,8 +113,8 @@
             android:layout_marginRight="12dp"
             android:text="Confirm\nPassword"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintBottom_toBottomOf="@+id/editText7"
-            app:layout_constraintEnd_toStartOf="@+id/editText7"
+            app:layout_constraintBottom_toBottomOf="@+id/confirmPassword"
+            app:layout_constraintEnd_toStartOf="@+id/confirmPassword"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
@@ -127,7 +127,7 @@
             android:onClick="displayRegMessage"
             android:text="register"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/editText7" />
+            app:layout_constraintStart_toStartOf="@+id/confirmPassword" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

@@ -22,6 +22,7 @@ public class LoginUserActivity extends AppCompatActivity{
     public void authenticateUser(View view){
         Intent intent = new Intent(this, DisplayLoginMessage.class);
         try{
+            System.out.println("USERNAME: "+ username.getText().toString());
             boolean foundUser = model.isValidLoginCredentials(username.getText().toString(),
                     password.getText().toString(), this);
             if (foundUser)

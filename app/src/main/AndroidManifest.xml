@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OpenRegPage"></activity>
-        <activity android:name=".DisplayLoginMessage" />
+        <activity android:name=".OpenRegPage"
+                  android:parentActivityName=".LoginUserActivity"></activity>
+        <activity android:name=".DisplayLoginMessage"
+                  android:parentActivityName=".LoginUserActivity"/>
         <activity android:name=".LoginUserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

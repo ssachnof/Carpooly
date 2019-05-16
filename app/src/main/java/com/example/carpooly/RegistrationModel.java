@@ -30,13 +30,13 @@ import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 public class RegistrationModel {
-    public static boolean createUser(String username, String pass, Context context) throws IOException {
+    public boolean createUser(String username, String pass, Context context) throws IOException {
         System.out.println("username: " + username);
         System.out.println("pass: " + pass);
         String lines = "";
         JsonParser parser = new JsonParser();
         try {
-            InputStream fs = context.getAssets().open("users.json");
+            InputStream fs = context.openFileInput("users.json");
             int max_size = fs.available();
 
             //read the input file byte by byte
