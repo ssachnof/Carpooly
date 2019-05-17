@@ -3,8 +3,7 @@ jdk: oraclejdk8
 branches:
   only:
   - master
-  - develop
-  - /^feature-.*$/
+  - /^deploy-.*$/
 android:
   components:
   - tools
