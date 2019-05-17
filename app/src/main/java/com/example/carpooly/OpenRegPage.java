@@ -23,9 +23,13 @@ public class OpenRegPage extends AppCompatActivity {
         EditText password = (EditText) findViewById(R.id.password);
         EditText confirm_password = (EditText) findViewById(R.id.confirmPassword);
         RegistrationModel model = new RegistrationModel(username.getText().toString(),
-                                                        password.getText().toString());
+                                                        password.getText().toString(),
+                                                        confirm_password.getText().toString());
         boolean result = model.createUser(this);
-        intent.putExtra(LoginUserActivity.getKey(), "user successfully registered!!!!");
+        if (result)
+            intent.putExtra(LoginUserActivity.getKey(), "user successfully registered!!!!");
+        else
+            intent.putExtra(LoginUserActivity.getKey(), "unsuccessful registration!!!!!");
         startActivity(intent);
 
     }
