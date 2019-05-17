@@ -22,7 +22,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
-//unnecssary comment
 public class LoginModel {
     public static boolean isValidLoginCredentials(String username, String pass, Context context) throws IOException {
         String lines = "";
