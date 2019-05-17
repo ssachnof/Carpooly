@@ -34,7 +34,13 @@ import java.util.Scanner;
 import javax.xml.parsers.FactoryConfigurationError;
 
 public class RegistrationModel {
-    public boolean createUser(String username, String pass, Context context) throws IOException {
+    private String username;
+    private String pass;
+    public RegistrationModel(String username, String pass){
+        this.username = username;
+        this.pass = pass;
+    }
+    public boolean createUser(Context context) throws IOException {
         String lines = "";
         JsonParser parser = new JsonParser();
         try {

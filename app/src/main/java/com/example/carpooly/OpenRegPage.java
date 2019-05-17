@@ -10,26 +10,22 @@ import java.io.IOException;
 
 public class OpenRegPage extends AppCompatActivity {
 
-    private EditText username;
-    private EditText password;
-    private EditText confirm_password;
-    private RegistrationModel model;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        this.username = (EditText) findViewById(R.id.username);
-        this.password = (EditText) findViewById(R.id.password);
-        this.confirm_password = (EditText) findViewById(R.id.confirmPassword);
-        this.model = new RegistrationModel();
     }
 
     public void displayRegMessage(View view) throws IOException {
         Intent intent = new Intent(this, DisplayLoginMessage.class);
-        intent.putExtra(LoginUserActivity.CREDENTIALS, "user successfully registered!!!!");
-        boolean result = model.createUser(username.getText().toString(),
-                password.getText().toString(), this);
+        // extract fields
+        EditText username = (EditText) findViewById(R.id.username);
+        EditText password = (EditText) findViewById(R.id.password);
+        EditText confirm_password = (EditText) findViewById(R.id.confirmPassword);
+        RegistrationModel model = new RegistrationModel(username.getText().toString(),
+                                                        password.getText().toString());
+        boolean result = model.createUser(this);
+        intent.putExtra(LoginUserActivity.getKey(), "user successfully registered!!!!");
         startActivity(intent);
 
     }
