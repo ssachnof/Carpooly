@@ -4,13 +4,13 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.JsonWriter;
 
-import com.google.gson.Gson;
+/*import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonPrimitive;*/
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,7 +35,7 @@ import javax.xml.parsers.FactoryConfigurationError;
 
 public class RegistrationModel {
     public boolean createUser(String username, String pass, Context context) throws IOException {
-        String lines = "";
+        /*String lines = "";
         JsonParser parser = new JsonParser();
         try {
             InputStream fs = context.openFileInput("users.json");
@@ -67,6 +67,7 @@ public class RegistrationModel {
                 e1.printStackTrace();
                 return false;
             }
-        }
+        }*/
+        return false;
     }
 }
