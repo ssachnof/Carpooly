@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
+
 class LoginModel {
     private String username;
     private String pass;
@@ -56,5 +57,6 @@ class LoginModel {
             e.printStackTrace();
             return false;
         }
+        return false;
     }
 }

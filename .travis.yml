@@ -4,7 +4,6 @@ branches:
   only:
   - master
   - develop
-  - /^feature-.*$/
 android:
   components:
   - tools
@@ -13,8 +12,8 @@ android:
   - extra-android-m2repository
   - extra-google-m2repository
   - android-28
-#  - sys-img-x86-android-28
-#  - sys-img-armeabi-v7a-android-17
+  - sys-img-x86-android-28
+  - sys-img-armeabi-v7a-android-17
 licenses:
   - 'android-sdk-license-.+'
 
