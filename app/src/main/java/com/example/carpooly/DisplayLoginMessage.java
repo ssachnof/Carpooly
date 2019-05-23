@@ -14,7 +14,7 @@ public class DisplayLoginMessage extends AppCompatActivity {
         setContentView(R.layout.activity_display_message);
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        String username = intent.getStringExtra(LoginUserActivity.CREDENTIALS);
+        String username = intent.getStringExtra(LoginUserActivity.getKey());
 
         //display the username
         TextView textView1 = findViewById(R.id.textView1);

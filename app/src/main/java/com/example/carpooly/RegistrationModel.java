@@ -4,13 +4,13 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.JsonWriter;
 
-/*import com.google.gson.Gson;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;*/
+import com.google.gson.JsonPrimitive;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,10 +34,20 @@ import java.util.Scanner;
 import javax.xml.parsers.FactoryConfigurationError;
 
 public class RegistrationModel {
-    public boolean createUser(String username, String pass, Context context) throws IOException {
-        /*String lines = "";
+    private String username;
+    private String pass;
+    private String confirm_pass;
+    public RegistrationModel(String username, String pass, String confirm_pass){
+        this.username = username;
+        this.pass = pass;
+        this.confirm_pass = confirm_pass;
+    }
+    public boolean createUser(Context context) throws IOException {
+        String lines = "";
         JsonParser parser = new JsonParser();
         try {
+            if(!pass.equals(confirm_pass))
+                throw new IllegalArgumentException("Passwords must match");
             InputStream fs = context.openFileInput("users.json");
             int max_size = fs.available();
 
@@ -67,7 +77,9 @@ public class RegistrationModel {
                 e1.printStackTrace();
                 return false;
             }
-        }*/
-        return false;
+        }
+        catch(IllegalArgumentException e2){
+            return false;
+        }
     }
 }

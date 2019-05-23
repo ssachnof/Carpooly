@@ -1,13 +1,14 @@
 package com.example.carpooly;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.EditText;
 
-/*import com.google.gson.Gson;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;*/
+import com.google.gson.JsonParser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,9 +23,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
-public class LoginModel {
-    public static boolean isValidLoginCredentials(String username, String pass, Context context) throws IOException {
-        /*String lines = "";
+class LoginModel {
+    private String username;
+    private String pass;
+
+    LoginModel(String username, String pass){
+        this.username = username;
+        this.pass = pass;
+    }
+
+    boolean isValidLoginCredentials(Context context) throws IOException {
+        String lines = "";
         JsonParser parser = new JsonParser();
         try {
             InputStream fs = context.openFileInput("users.json");
@@ -46,7 +55,6 @@ public class LoginModel {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        }*/
-        return false;
+        }
     }
 }
