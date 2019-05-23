@@ -6,22 +6,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import java.io.IOException;
+
 public class LoginUserActivity extends AppCompatActivity{
-    public static final String CREDENTIALS = "credentials";
+    private static final String CREDENTIALS = "credentials";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
     }
-    public void authenticateUser(View view){
+    public void authenticateUser(View view) throws IOException {
         Intent intent = new Intent(this, DisplayLoginMessage.class);
         EditText username = (EditText) findViewById(R.id.username);
         EditText password = (EditText) findViewById(R.id.password);
-        String username_message = username.getText().toString();
-        String password_message = password.getText().toString();
+        LoginModel model = new LoginModel(username.getText().toString(),
+                                          password.getText().toString());
+        boolean auth_result = model.isValidLoginCredentials(this);
         try{
-            boolean foundUser = LoginModel.isValidLoginCredentials(username_message, password_message, this);
+            boolean foundUser = model.isValidLoginCredentials(this);
             if (foundUser)
                 intent.putExtra(CREDENTIALS, "success!!!");
             else
@@ -32,6 +36,7 @@ public class LoginUserActivity extends AppCompatActivity{
         }
         startActivity(intent);
     }
+    public static String getKey(){return CREDENTIALS;}
     public void openRegPage(View view){
         Intent intent = new Intent(this, OpenRegPage.class);
         startActivity(intent);
