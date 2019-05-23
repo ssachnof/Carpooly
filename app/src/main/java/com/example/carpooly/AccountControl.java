@@ -25,7 +25,7 @@ public class AccountControl extends AppCompatActivity{
 
         //set the image
         ImageView picture = findViewById(R.id.imageView2);
-        picture.setImageResource(R.drawable.blank);
+        picture.setImageResource(R.drawable.carpooly3);
 
         //set the username
         TextView userName = findViewById(R.id.textView3);

@@ -12,6 +12,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;*/
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.BufferedReader;
@@ -82,6 +85,4 @@ public class RegistrationModel {
             return false;
         }
         }
-        return false;
     }
-}

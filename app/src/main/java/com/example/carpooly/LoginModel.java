@@ -57,6 +57,5 @@ class LoginModel {
             e.printStackTrace();
             return false;
         }
-        return false;
     }
 }
