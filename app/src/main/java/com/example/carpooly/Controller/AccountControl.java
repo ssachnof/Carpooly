@@ -1,4 +1,4 @@
-package com.example.carpooly;
+package com.example.carpooly.Controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+
+import com.example.carpooly.R;
 
 import java.util.ArrayList;
 import java.util.List;

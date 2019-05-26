@@ -1,10 +1,12 @@
-package com.example.carpooly;
+package com.example.carpooly.Controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.carpooly.R;
 
 public class DisplayLoginMessage extends AppCompatActivity {
 

@@ -1,7 +1,6 @@
-package com.example.carpooly;
+package com.example.carpooly.Controller;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,26 +10,29 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.carpooly.Model.*;
+import com.example.carpooly.Model.EditTextExtractor;
+import com.example.carpooly.ElementExtractor;
+import com.example.carpooly.R;
+import com.example.carpooly.viewUpdater;
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
-import com.firebase.ui.auth.util.ExtraConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class LoginUserActivity extends AppCompatActivity implements viewUpdater{
+public class LoginUserActivity extends AppCompatActivity implements viewUpdater {
     private static final String EMAIL = "email";
     private int RC_SIGN_IN;
     private List<AuthUI.IdpConfig> providers;
     private ActionCodeSettings actionCodeSettings;
     private LoginModel model;
+
 
 
     @Override
@@ -62,7 +64,6 @@ public class LoginUserActivity extends AppCompatActivity implements viewUpdater{
         String password = extractor.extractElement(fieldItem);
 
         Intent intent = getIntent();
-        FirebaseAuth auth = FirebaseAuth.getInstance();
 
         this.model = new LoginModel(email, password, this);
         Task<AuthResult> signInTask = model.signInUser();
@@ -100,12 +101,16 @@ public class LoginUserActivity extends AppCompatActivity implements viewUpdater{
             intent.putExtra(getUserEmailKey(), model.getEmail());
             startActivity(intent);
         }
+        else{
+            ((EditText) findViewById(R.id.Email)).setText("Email");
+            ((EditText) findViewById(R.id.password)).setText("Password");
+        }
     }
 
     public static String getUserEmailKey(){return EMAIL;}
 
     public void openRegPage(View view){
-        Intent intent = new Intent(this, OpenRegPage.class);
+        Intent intent = new Intent(this, OpenRegPageController.class);
         startActivity(intent);
 
 

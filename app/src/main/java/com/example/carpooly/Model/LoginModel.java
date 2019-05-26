@@ -1,4 +1,4 @@
-package com.example.carpooly;
+package com.example.carpooly.Model;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,16 +9,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.example.carpooly.Model.*;
+import com.example.carpooly.Controller.*;
 
 
-class LoginModel {
+public class LoginModel {
     private String email;
     private String password;
     private FirebaseAuth auth;
     private Context loginContext;
     private FirebaseUser currentUser;
 
-    LoginModel(String email, String pass, Context context){
+    public LoginModel(String email, String pass, Context context){
         this.email = email;
         this.password = pass;
         this.auth = FirebaseAuth.getInstance();
