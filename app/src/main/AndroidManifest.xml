@@ -9,13 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AccountControl"
-                  android:parentActivityName=".DisplayLoginMessage"></activity>
-        <activity android:name=".OpenRegPage"
-                  android:parentActivityName=".LoginUserActivity"></activity>
-        <activity android:name=".DisplayLoginMessage"
-                  android:parentActivityName=".LoginUserActivity"/>
-        <activity android:name=".LoginUserActivity">
+        <activity android:name=".Controller.AccountControl"
+                  android:parentActivityName=".Controller.DisplayLoginMessage"></activity>
+        <activity android:name=".Controller.OpenRegPageController"
+                  android:parentActivityName=".Controller.LoginUserActivity"></activity>
+        <activity android:name=".Controller.DisplayLoginMessage"
+                  android:parentActivityName=".Controller.LoginUserActivity"/>
+        <activity android:name=".Controller.LoginUserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

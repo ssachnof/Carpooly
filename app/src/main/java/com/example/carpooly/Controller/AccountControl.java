@@ -1,4 +1,4 @@
-package com.example.carpooly;
+package com.example.carpooly.Controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+
+import com.example.carpooly.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class AccountControl extends AppCompatActivity{
 
         //set the image
         ImageView picture = findViewById(R.id.imageView2);
-        picture.setImageResource(R.drawable.blank);
+        picture.setImageResource(R.drawable.carpooly3);
 
         //set the username
         TextView userName = findViewById(R.id.textView3);

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "836411880076",
+    "firebase_url": "https://carpooly-aa517.firebaseio.com",
+    "project_id": "carpooly-aa517",
+    "storage_bucket": "carpooly-aa517.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836411880076:android:adda78e87583e002",
+        "android_client_info": {
+          "package_name": "com.example.carpooly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836411880076-qsk9fk0dplc3vjliv81kqmmbf036d60h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.carpooly",
+            "certificate_hash": "5cfc662dccdd6b5c0f7e5d291c5f9011d4e20f37"
+          }
+        },
+        {
+          "client_id": "836411880076-km05dhphlc623qnh3u1d33ueqlui69da.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvjHsm98OemnkXsmHvyhwhFKDwzX6vvCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "836411880076-km05dhphlc623qnh3u1d33ueqlui69da.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

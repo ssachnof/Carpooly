@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/Email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="143dp"
@@ -42,7 +42,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="30sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/username"
+            app:layout_constraintBottom_toTopOf="@+id/Email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -55,8 +55,8 @@
             android:layout_marginLeft="8dp"
             android:text="Email:"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintBaseline_toBaselineOf="@+id/username"
-            app:layout_constraintEnd_toStartOf="@+id/username"
+            app:layout_constraintBaseline_toBaselineOf="@+id/Email"
+            app:layout_constraintEnd_toStartOf="@+id/Email"
             app:layout_constraintHorizontal_bias="0.226"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -74,7 +74,7 @@
             app:layout_constraintBottom_toTopOf="@+id/confirmPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView13"
-            app:layout_constraintTop_toBottomOf="@+id/username" />
+            app:layout_constraintTop_toBottomOf="@+id/Email" />
 
         <TextView
             android:id="@+id/textView13"
