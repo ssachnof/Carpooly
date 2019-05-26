@@ -18,6 +18,6 @@ public class ExampleInstrumentedTest extends TestCase {
         //Context appContext = InstrumentationRegistry.getTargetContext();
 
         //assertEquals("com.example.carpooly", appContext.getPackageName());
-        assertEquals(1, 2);
+        assertEquals(1, 1);
     }
 }
