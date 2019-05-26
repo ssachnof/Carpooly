@@ -14,13 +14,11 @@ public class DisplayLoginMessage extends AppCompatActivity {
         setContentView(R.layout.activity_display_message);
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        String username = intent.getStringExtra(LoginUserActivity.getKey());
+        String username = intent.getStringExtra(LoginUserActivity.getUserEmailKey());
 
         //display the username
         TextView textView1 = findViewById(R.id.textView1);
-        textView1.setText(username);
-
-        //display the password
+        textView1.setText(username + " successfully logged in!!!!!!");
     }
 
     public void openAccountPage(View view){

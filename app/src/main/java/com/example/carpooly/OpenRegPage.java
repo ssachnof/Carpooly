@@ -19,17 +19,18 @@ public class OpenRegPage extends AppCompatActivity {
     public void displayRegMessage(View view) throws IOException {
         Intent intent = new Intent(this, DisplayLoginMessage.class);
         // extract fields
-        EditText username = (EditText) findViewById(R.id.username);
+        EditText username = (EditText) findViewById(R.id.Email);
         EditText password = (EditText) findViewById(R.id.password);
         EditText confirm_password = (EditText) findViewById(R.id.confirmPassword);
         RegistrationModel model = new RegistrationModel(username.getText().toString(),
                                                         password.getText().toString(),
                                                         confirm_password.getText().toString());
         boolean result = model.createUser(this);
+        //todo: remember to change the keys that are used here!!!!!
         if (result)
-            intent.putExtra(LoginUserActivity.getKey(), "user successfully registered!!!!");
+            intent.putExtra(LoginUserActivity.getUserEmailKey(), "user successfully registered!!!!");
         else
-            intent.putExtra(LoginUserActivity.getKey(), "unsuccessful registration!!!!!");
+            intent.putExtra(LoginUserActivity.getUserEmailKey(), "unsuccessful registration!!!!!");
         startActivity(intent);
 
     }
