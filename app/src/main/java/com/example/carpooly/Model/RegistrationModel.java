@@ -19,12 +19,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import com.google.firebase.storage.StorageReference;
 
 public class RegistrationModel implements DatabaseWriter {
     private String email;
@@ -32,11 +35,13 @@ public class RegistrationModel implements DatabaseWriter {
     private String confirm_pass;
     private String name;
     private String phoneNumber;
+    private String profilePicture;
 
     private Context registrationContext;
     private FirebaseAuth auth;
     private FirebaseUser user;
     private UserObject newUser;
+    private FirebaseStorage storage;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     //todo: make sure that at some point you modify the security settings on the db so that a user
     // can't write to another one's data!!!!!!
@@ -50,12 +55,18 @@ public class RegistrationModel implements DatabaseWriter {
         this.name = firstName + " " + lastName;
         this.phoneNumber = phoneNumber;
         this.registrationContext = registrationContext;
+        this.profilePicture = getDefaultProfilePicture();
         this.auth = FirebaseAuth.getInstance();
+        this.storage = FirebaseStorage.getInstance();
 
     }
     public Task<AuthResult> registerUser() {
         return auth.createUserWithEmailAndPassword(email, pass);
     }
+
+
+    private String getDefaultProfilePicture(){return "default_profile_picture.jpg";}
+
 
     public String getEmail() {
         return email;
@@ -79,12 +90,14 @@ public class RegistrationModel implements DatabaseWriter {
     }
 
     @Override
-    public void write(){
+    public void write() {
         DatabaseReference ref = database.getReference().child("Users").child(user.getUid());
         HashMapInitializer<String, Serializable> hashInitializer = new HashMapInitializer<>();
         HashMap<String, Serializable> userData = hashInitializer.
                 makeHash(Arrays.asList("Name", "Rating", "Email", "Phone", "PrivacyModeActive"),
                         Arrays.<Serializable>asList(this.name, 3.0, this.email, this.phoneNumber, true));
         ref.setValue(userData);
+        StorageReference storageRef = storage.getReference().child("images/" + profilePicture);
+        ref.child("profilePicture").setValue(storageRef.toString());
     }
 }
