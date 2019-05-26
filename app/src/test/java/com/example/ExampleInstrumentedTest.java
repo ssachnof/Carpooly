@@ -1,11 +1,8 @@
-package com.example.carpooly;
+package com.example;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import junit.framework.TestCase;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
@@ -14,14 +11,13 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-@RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
+public class ExampleInstrumentedTest extends TestCase {
     @Test
     public void useAppContext() {
         // Context of the app under test.
         //Context appContext = InstrumentationRegistry.getTargetContext();
 
         //assertEquals("com.example.carpooly", appContext.getPackageName());
-        assertEquals(1, 1);
+        assertEquals(1, 2);
     }
 }

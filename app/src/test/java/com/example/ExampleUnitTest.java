@@ -1,4 +1,6 @@
-package com.example.carpooly;
+package com.example;
+
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
@@ -9,9 +11,9 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+public class ExampleUnitTest extends TestCase {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+        assertEquals(4, 2 + 3);
     }
 }
