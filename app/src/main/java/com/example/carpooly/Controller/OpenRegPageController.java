@@ -36,11 +36,15 @@ public class OpenRegPageController extends AppCompatActivity implements viewUpda
         String email = extractor.extractElement(findViewById(R.id.Email));
         String password = extractor.extractElement(findViewById(R.id.password));
         String confirmPassword = extractor.extractElement(findViewById(R.id.confirmPassword));
+        String phoneNumber = extractor.extractElement(findViewById(R.id.PhoneNumber));
+        String firstName = extractor.extractElement(findViewById(R.id.FirstName));
+        String lastName = extractor.extractElement(findViewById(R.id.LastName));
         if (!validatePassword(password, confirmPassword)){
             updateUI(null);
         }
         else {
-            this.model = new RegistrationModel(email, password, confirmPassword, this);
+            this.model = new RegistrationModel(email, password, confirmPassword, phoneNumber,
+                                                firstName, lastName, this);
             //model.setAuth();
             Task<AuthResult> regTask = model.registerUser();
             regTask.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -48,6 +52,7 @@ public class OpenRegPageController extends AppCompatActivity implements viewUpda
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         FirebaseUser user = model.getUser();
+                        model.write();
                         updateUI(user);
                     } else {
                         updateUI(null);
