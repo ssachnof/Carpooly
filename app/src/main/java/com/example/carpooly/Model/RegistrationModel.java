@@ -1,6 +1,7 @@
 package com.example.carpooly.Model;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 
 /*import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,6 +11,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;*/
 
+import com.example.carpooly.DatabaseReader;
 import com.example.carpooly.DatabaseWriter;
 import com.example.carpooly.HashMapInitializer;
 import com.example.carpooly.UserObject;
@@ -17,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -42,10 +45,13 @@ public class RegistrationModel implements DatabaseWriter {
     private FirebaseUser user;
     private UserObject newUser;
     private FirebaseStorage storage;
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     //todo: make sure that at some point you modify the security settings on the db so that a user
     // can't write to another one's data!!!!!!
 
+    public RegistrationModel(){
+        this.auth = FirebaseAuth.getInstance();
+    }
 
     public RegistrationModel(String email, String pass, String confirm_pass, String phoneNumber,
                              String firstName, String lastName, Context registrationContext) {
@@ -89,6 +95,7 @@ public class RegistrationModel implements DatabaseWriter {
         return user;
     }
 
+
     @Override
     public void write() {
         DatabaseReference ref = database.getReference().child("Users").child(user.getUid());
@@ -99,5 +106,11 @@ public class RegistrationModel implements DatabaseWriter {
         ref.setValue(userData);
         StorageReference storageRef = storage.getReference().child("images/" + profilePicture);
         ref.child("profilePicture").setValue(storageRef.toString());
+    }
+
+
+    public DatabaseReference getUserReference(){
+        getUser();
+        return database.getReference().child("Users").child(user.getUid());
     }
 }
