@@ -71,6 +71,7 @@ public class LoginUserActivity extends AppCompatActivity implements viewUpdater 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
+                    UserModel.user = model.getCurrentUser();
                     FirebaseUser user = model.getCurrentUser();
                     Log.d("LoginUserActivity.class", "signInWithEmail:success");
                     updateUI(user);
@@ -88,9 +89,7 @@ public class LoginUserActivity extends AppCompatActivity implements viewUpdater 
         });
     }
 
-    public Intent getNextIntent(){
-        return new Intent(this, DisplayLoginMessage.class);
-    }
+    public Intent getNextIntent(){ return new Intent(this, DisplayLoginMessage.class); }
 
 
     // note: this function will change when you add the home screen in
