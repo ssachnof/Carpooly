@@ -93,12 +93,25 @@ public class AccountControl extends AppCompatActivity{
             }
         });
 
+        //set the privacy mode
         List<String> privacyArray = new ArrayList<>();
         privacyArray.add("Private");
         privacyArray.add("Public");
         Spinner privacyOptions = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.privacy_view, privacyArray);
+        DatabaseReference uprivmode = currentUser.child("PrivacyModeActive");
         privacyOptions.setAdapter(adapter);
+        uprivmode.addValueEventListener(new ValueEventListener(){
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot){
+                Spinner privacyOptions = findViewById(R.id.spinner);
+                privacyOptions.setSelection(dataSnapshot.getValue(int.class));
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError){
+
+            }
+        });
     }
 
 }
