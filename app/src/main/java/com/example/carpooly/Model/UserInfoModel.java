@@ -15,6 +15,7 @@ import com.example.carpooly.DatabaseReader;
 import com.example.carpooly.DatabaseWriter;
 import com.example.carpooly.HashMapInitializer;
 import com.example.carpooly.UserObject;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,85 +33,85 @@ import java.util.HashMap;
 import java.util.List;
 import com.google.firebase.storage.StorageReference;
 
-public class RegistrationModel implements DatabaseWriter {
-    private String email;
-    private String pass;
+
+// note that we may want to extend loginModel in the future instead
+public class UserInfoModel extends UserModel {
     private String confirm_pass;
     private String name;
     private String phoneNumber;
     private String profilePicture;
 
-    private Context registrationContext;
-    private FirebaseAuth auth;
     private FirebaseUser user;
-    private UserObject newUser;
     private FirebaseStorage storage;
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseDatabase database;
     //todo: make sure that at some point you modify the security settings on the db so that a user
     // can't write to another one's data!!!!!!
 
-    public RegistrationModel(){
-        this.auth = FirebaseAuth.getInstance();
-    }
 
-    public RegistrationModel(String email, String pass, String confirm_pass, String phoneNumber,
-                             String firstName, String lastName, Context registrationContext) {
-        this.email = email;
-        this.pass = pass;
+    //todo: change privacy mode active to be stored as an integer value instead of a boolean!!!!!
+
+    //todo: have controller pass in name as 1 field instead of 2
+
+    public UserInfoModel(String email, String pass, String confirm_pass, String phoneNumber,
+                         String firstName, String lastName, Context context) {
+        super(email, pass, context);
         this.confirm_pass = confirm_pass;
-        this.name = firstName + " " + lastName;
+        this.name = firstName + " " + lastName;//this should probably be done in controller!!!!!
         this.phoneNumber = phoneNumber;
-        this.registrationContext = registrationContext;
         this.profilePicture = getDefaultProfilePicture();
-        this.auth = FirebaseAuth.getInstance();
+        //fairly confident that we don't need this
+        //this.auth = FirebaseAuth.getInstance();
         this.storage = FirebaseStorage.getInstance();
+        this.database = FirebaseDatabase.getInstance();
 
     }
+
+    public UserInfoModel(Context context){
+        super(context);
+    }
+
     public Task<AuthResult> registerUser() {
-        return auth.createUserWithEmailAndPassword(email, pass);
+        return super.getAuth().createUserWithEmailAndPassword(super.getEmail(), super.getPassword());
     }
 
 
     private String getDefaultProfilePicture(){return "default_profile_picture.jpg";}
 
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return pass;
-    }
-
     public String getName(){return name;}
 
     public String getPhoneNumber(){return phoneNumber;}
 
-    public void setAuth() {
-        this.auth = FirebaseAuth.getInstance();
-    }
-
-    public FirebaseUser getUser() {
-        this.user = auth.getCurrentUser();
-        return user;
-    }
-
 
     @Override
     public void write() {
+        this.database = FirebaseDatabase.getInstance();
+        this.user = getUser();
         DatabaseReference ref = database.getReference().child("Users").child(user.getUid());
         HashMapInitializer<String, Serializable> hashInitializer = new HashMapInitializer<>();
         HashMap<String, Serializable> userData = hashInitializer.
                 makeHash(Arrays.asList("Name", "Rating", "Email", "Phone", "PrivacyModeActive"),
-                        Arrays.<Serializable>asList(this.name, 3.0, this.email, this.phoneNumber, true));
+                        Arrays.<Serializable>asList(this.name, 3.0, super.getEmail(), this.phoneNumber, 0));
         ref.setValue(userData);
-        StorageReference storageRef = storage.getReference().child("images/" + profilePicture);
-        ref.child("profilePicture").setValue(storageRef.toString());
+//        StorageReference storageRef = storage.getReference().child("images/" + profilePicture);
+//        ref.child("profilePicture").setValue(storageRef.toString());
+    }
+
+    public void read(String fieldName){
+        DatabaseReference userRef = getUserReference();
+
+
     }
 
 
     public DatabaseReference getUserReference(){
-        getUser();
+        this.user = super.getUser();
         return database.getReference().child("Users").child(user.getUid());
+    }
+
+    public DatabaseReference getChild(String fieldName){
+        this.database = FirebaseDatabase.getInstance();
+        this.user = getUser();
+        DatabaseReference ref = getUserReference();
+        return ref.child(fieldName);
     }
 }
