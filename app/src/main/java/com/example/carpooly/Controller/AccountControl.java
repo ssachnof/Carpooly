@@ -1,127 +1,110 @@
 package com.example.carpooly.Controller;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.renderscript.Sampler;
+import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 
-import com.example.carpooly.Model.RegistrationModel;
-import com.example.carpooly.Model.UserModel;
+import com.example.carpooly.Model.UserInfoModel;
 import com.example.carpooly.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.logging.*;
 
 public class AccountControl extends AppCompatActivity {
 
-    private RegistrationModel model;
+    private UserInfoModel model;
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     //todo: you need to make sure stuff goes into the correct class here!!!!!!
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        this.model = new UserInfoModel(this);
+        DatabaseReference emailRef = model.getChild("Email");
+        DatabaseReference nameRef = model.getChild("Name");
+        DatabaseReference phoneRef = model.getChild("Phone");
+        DatabaseReference ratingBarRef = model.getChild("Rating");
+        DatabaseReference profilePictureRef = model.getChild("profilePicture");
+
+        emailRef.addValueEventListener(getDBChange("Email", String.class));
+        nameRef.addValueEventListener(getDBChange("Name", String.class));
+        phoneRef.addValueEventListener(getDBChange("Phone", String.class));
+        ratingBarRef.addValueEventListener(getDBChange("Rating", float.class));
         // Get the Intent that started this activity and extract the string
-        String email = "sJohnston@gmail.com";
-        String phone = "(805) 867-5309";
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference currentUser = database.getReference("Users/").child(UserModel.user.getUid());
+//        //set the privacy mode
+//        List<String> privacyArray = new ArrayList<>();
+//        privacyArray.add("Private");
+//        privacyArray.add("Public");
+//        Spinner privacyOptions = findViewById(R.id.PrivacyModeActive);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.privacy_view, privacyArray);
+//        DatabaseReference uprivmode = currentUser.child("PrivacyModeActive");
+//        privacyOptions.setAdapter(adapter);
+//        uprivmode.addValueEventListener(new ValueEventListener(){
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot){
+//                Spinner privacyOptions = findViewById(R.id.PrivacyModeActive);
+//                privacyOptions.setSelection(dataSnapshot.getValue(int.class));
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError){
+//                LOGGER.log(Level.WARNING, "DATABASE ERROR: " + "STUFF GOT CANCELLED");
+//            }
+//        });
+//    }
+//
+//
+    }
+    public <T extends Object> ValueEventListener getDBChange(final String field, final Class<T> className){
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (field.equals("Email")){
+                    TextView userEmail = ((TextView) findViewById(R.id.Email));
+                    userEmail.setText(dataSnapshot.getValue(String.class));
 
-        //set the image
-        ImageView picture = findViewById(R.id.ProfilePicture);
-        picture.setImageResource(R.drawable.carpooly3);
-        //todo: change adding these event listeners into a function
-        //  currently not good code
-        //set the username
-        DatabaseReference uname = currentUser.child("Name");
-        uname.addValueEventListener(new ValueEventListener(){
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot){
-                TextView userName = findViewById(R.id.Name);
-                userName.setText(dataSnapshot.getValue(String.class));
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError){
-                LOGGER.log(Level.WARNING, "DATABASE ERROR: " + "STUFF GOT CANCELLED");
-            }
-        });
+                }
+                else if (field.equals("Name")){
+                    TextView userEmail = ((TextView) findViewById(R.id.Name));
+                    userEmail.setText(dataSnapshot.getValue(String.class));
 
-        //set the rating
-        DatabaseReference urate = currentUser.child("Rating");
-        urate.addValueEventListener(new ValueEventListener(){
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot){
-                RatingBar userRating = findViewById(R.id.ratingBar);
-                float rate = dataSnapshot.getValue(float.class);
-                userRating.setRating(rate);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError){
-                LOGGER.log(Level.WARNING, "DATABASE ERROR: " + "STUFF GOT CANCELLED");
+                }
+
+                else if(field.equals("Password")){
+                    LOGGER.log(Level.SEVERE, "ACCOUNT CONTROL: PASSWORD VALUE LISTENTER UNIMPLEMENTED");
+                    throw new IllegalArgumentException();
+                }
+
+                else if (field.equals("Phone")){
+                    TextView userPhone = ((TextView) findViewById(R.id.PhoneNumber));
+                    userPhone.setText(dataSnapshot.getValue(String.class));
+                }
+
+                else if (field.equals("Rating")){
+                    RatingBar userRating = ((RatingBar) findViewById(R.id.ratingBar));
+                    userRating.setRating(dataSnapshot.getValue(float.class));
+
+                }
 
             }
-        });
 
-        //set the email
-        DatabaseReference uemail = currentUser.child("Email");
-        uemail.addValueEventListener(new ValueEventListener(){
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot){
-                TextView userEmail = findViewById(R.id.Email);
-                userEmail.setText(dataSnapshot.getValue(String.class));
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError){
-                LOGGER.log(Level.WARNING, "DATABASE ERROR: " + "STUFF GOT CANCELLED");
-            }
-        });
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                LOGGER.log(Level.SEVERE, "ACCOUNT CONTROL: DATABASE ERROR");
+                throw new IllegalArgumentException();
 
-        //set the phone
-        DatabaseReference uphone = currentUser.child("Phone");
-        uphone.addValueEventListener(new ValueEventListener(){
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot){
-                TextView userPhone = findViewById(R.id.PhoneNumber);
-                userPhone.setText(dataSnapshot.getValue(String.class));
             }
-            @Override
-            public void onCancelled(DatabaseError databaseError){
-                LOGGER.log(Level.WARNING, "DATABASE ERROR: " + "STUFF GOT CANCELLED");
-            }
-        });
-        //set the privacy mode
-        List<String> privacyArray = new ArrayList<>();
-        privacyArray.add("Private");
-        privacyArray.add("Public");
-        Spinner privacyOptions = findViewById(R.id.PrivacyModeActive);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.privacy_view, privacyArray);
-        DatabaseReference uprivmode = currentUser.child("PrivacyModeActive");
-        privacyOptions.setAdapter(adapter);
-        uprivmode.addValueEventListener(new ValueEventListener(){
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot){
-                Spinner privacyOptions = findViewById(R.id.PrivacyModeActive);
-                privacyOptions.setSelection(dataSnapshot.getValue(int.class));
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError){
-                LOGGER.log(Level.WARNING, "DATABASE ERROR: " + "STUFF GOT CANCELLED");
-            }
-        });
+        };
+
     }
 
 }

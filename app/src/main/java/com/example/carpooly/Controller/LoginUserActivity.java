@@ -38,10 +38,9 @@ public class LoginUserActivity extends AppCompatActivity implements viewUpdater 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //note this should probably be deal with in the model!!!!!
         this.providers = Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build());
         //todo: might be better to create an onclick listener here and create the model object
-        //this.model.setAuth();
-        //this.actionCodeSettings = enableEmailLinkSignIn();
         setContentView(R.layout.activity_main);
     }
 
@@ -71,8 +70,8 @@ public class LoginUserActivity extends AppCompatActivity implements viewUpdater 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    UserModel.user = model.getCurrentUser();
-                    FirebaseUser user = model.getCurrentUser();
+                    model.setUser();
+                    FirebaseUser user = model.getUser();
                     Log.d("LoginUserActivity.class", "signInWithEmail:success");
                     updateUI(user);
 

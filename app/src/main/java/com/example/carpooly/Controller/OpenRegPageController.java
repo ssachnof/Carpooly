@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.example.carpooly.Model.EditTextExtractor;
 import com.example.carpooly.ElementExtractor;
 import com.example.carpooly.R;
-import com.example.carpooly.Model.RegistrationModel;
+import com.example.carpooly.Model.UserInfoModel;
 import com.example.carpooly.viewUpdater;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.io.IOException;
 
 public class OpenRegPageController extends AppCompatActivity implements viewUpdater {
-    private RegistrationModel model;
+    private UserInfoModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +39,12 @@ public class OpenRegPageController extends AppCompatActivity implements viewUpda
         String phoneNumber = extractor.extractElement(findViewById(R.id.PhoneNumber));
         String firstName = extractor.extractElement(findViewById(R.id.FirstName));
         String lastName = extractor.extractElement(findViewById(R.id.LastName));
+        this.model = new UserInfoModel(email, password, confirmPassword, phoneNumber, firstName, lastName, this);
         if (!validatePassword(password, confirmPassword)){
             updateUI(null);
         }
         else {
-            this.model = new RegistrationModel(email, password, confirmPassword, phoneNumber,
+            this.model = new UserInfoModel(email, password, confirmPassword, phoneNumber,
                                                 firstName, lastName, this);
             //model.setAuth();
             Task<AuthResult> regTask = model.registerUser();
