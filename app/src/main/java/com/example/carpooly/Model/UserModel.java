@@ -33,6 +33,9 @@ public abstract class UserModel {
         Firebase.setAndroidContext(context);
     }
 
+    //this only exists because a build failed
+    public UserModel(){}
+
     public void setUser(){
         this.auth = FirebaseAuth.getInstance();
         this.user = auth.getCurrentUser();
