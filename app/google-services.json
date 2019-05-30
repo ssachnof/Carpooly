@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "836411880076-so6ktaujku94nlcpnhn6fqkci00ork8d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.carpooly",
+            "certificate_hash": "889ee650a52949dcbef5a620b0612363b3998753"
+          }
+        },
+        {
           "client_id": "836411880076-qsk9fk0dplc3vjliv81kqmmbf036d60h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
