@@ -42,15 +42,16 @@ public class AccountControl extends AppCompatActivity {
         DatabaseReference currentUser = database.getReference("Users/").child(UserModel.user.getUid());
 
         //set the image
-        ImageView picture = findViewById(R.id.imageView2);
+        ImageView picture = findViewById(R.id.ProfilePicture);
         picture.setImageResource(R.drawable.carpooly3);
         //todo: change adding these event listeners into a function
+        //  currently not good code
         //set the username
         DatabaseReference uname = currentUser.child("Name");
         uname.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
-                TextView userName = findViewById(R.id.textView3);
+                TextView userName = findViewById(R.id.Name);
                 userName.setText(dataSnapshot.getValue(String.class));
             }
             @Override
@@ -80,7 +81,7 @@ public class AccountControl extends AppCompatActivity {
         uemail.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
-                TextView userEmail = findViewById(R.id.textView6);
+                TextView userEmail = findViewById(R.id.Email);
                 userEmail.setText(dataSnapshot.getValue(String.class));
             }
             @Override
@@ -94,7 +95,7 @@ public class AccountControl extends AppCompatActivity {
         uphone.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
-                TextView userPhone = findViewById(R.id.textView9);
+                TextView userPhone = findViewById(R.id.PhoneNumber);
                 userPhone.setText(dataSnapshot.getValue(String.class));
             }
             @Override
@@ -113,7 +114,7 @@ public class AccountControl extends AppCompatActivity {
         uprivmode.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
-                Spinner privacyOptions = findViewById(R.id.spinner);
+                Spinner privacyOptions = findViewById(R.id.PrivacyModeActive);
                 privacyOptions.setSelection(dataSnapshot.getValue(int.class));
             }
             @Override
