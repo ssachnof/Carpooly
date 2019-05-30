@@ -59,8 +59,6 @@ public class UserInfoModel extends UserModel {
         this.name = firstName + " " + lastName;//this should probably be done in controller!!!!!
         this.phoneNumber = phoneNumber;
         this.profilePicture = getDefaultProfilePicture();
-        //fairly confident that we don't need this
-        //this.auth = FirebaseAuth.getInstance();
         this.storage = FirebaseStorage.getInstance();
         this.database = FirebaseDatabase.getInstance();
 
@@ -92,8 +90,8 @@ public class UserInfoModel extends UserModel {
                 makeHash(Arrays.asList("Name", "Rating", "Email", "Phone", "PrivacyModeActive"),
                         Arrays.<Serializable>asList(this.name, 3.0, super.getEmail(), this.phoneNumber, 0));
         ref.setValue(userData);
-//        StorageReference storageRef = storage.getReference().child("images/" + profilePicture);
-//        ref.child("profilePicture").setValue(storageRef.toString());
+        StorageReference storageRef = storage.getReference().child("images/" + profilePicture);
+        ref.child("profilePicture").setValue(storageRef.toString());
     }
 
     public void read(String fieldName){
