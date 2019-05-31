@@ -29,6 +29,7 @@ dependencies {
     'com.firebaseui:firebase-ui-storage:4.3.1'
     implementation 'com.google.firebase:firebase-storage:17.0.0'
     implementation 'com.google.firebase:firebase-database:17.0.0'
+    implementation 'com.google.firebase:firebase-firestore:17.1.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     apply plugin: 'com.google.gms.google-services'
