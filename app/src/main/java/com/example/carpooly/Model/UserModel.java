@@ -8,6 +8,7 @@ import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public abstract class UserModel {
@@ -16,20 +17,20 @@ public abstract class UserModel {
     private String password;
     private FirebaseAuth auth;
     private FirebaseUser user;
-    private FirebaseDatabase database;
-
-
+    private FirebaseFirestore database;
     public UserModel(String email, String password, Context context) {
         this.email = email;
         this.password = password;
         this.auth = FirebaseAuth.getInstance();
-        this.database = FirebaseDatabase.getInstance();
+        this.database = FirebaseFirestore.getInstance();
         Firebase.setAndroidContext(context);
     }
 
     public UserModel(Context context){
         this.auth = FirebaseAuth.getInstance();
-        this.database = FirebaseDatabase.getInstance();
+        this.database = FirebaseFirestore.getInstance();
+        this.auth = FirebaseAuth.getInstance();
+        this.user = auth.getCurrentUser();
         Firebase.setAndroidContext(context);
     }
 
@@ -49,8 +50,8 @@ public abstract class UserModel {
         return user;
     }
 
-    public FirebaseDatabase getDatabase(){
-        this.database = FirebaseDatabase.getInstance();
+    public FirebaseFirestore getDatabase(){
+        this.database = FirebaseFirestore.getInstance();
         return this.database;
     }
 
@@ -59,6 +60,6 @@ public abstract class UserModel {
         return auth;
     }
 
-    public abstract void write();
-    public abstract void read(String fieldName);
+//    public abstract void write();
+//    public abstract void read(String fieldName);
 }

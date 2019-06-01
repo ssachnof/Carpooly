@@ -37,8 +37,8 @@ public class LoginModel extends UserModel{
 
     }
 
-    public DatabaseReference getCurrentUserPath(){
-        return super.getDatabase().getReference("Users/").child(super.getUId());
-    }
+//    public DatabaseReference getCurrentUserPath(){
+//        return super.getDatabase().getReference("Users/").child(super.getUId());
+//    }
 
 }
