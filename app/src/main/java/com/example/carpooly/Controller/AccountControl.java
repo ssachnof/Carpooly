@@ -9,7 +9,9 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -35,6 +37,7 @@ import com.google.firestore.admin.v1beta1.IndexFieldOrBuilder;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.*;
@@ -84,7 +87,15 @@ public class AccountControl extends AppCompatActivity {
 
             }
         });
+        privacyOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                userDataRef.update("PrivacyMode", adapterView.getItemAtPosition(i).toString());
+            }
 
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                return;
+            }
+        });
     }
     public <T extends Object> ValueEventListener getDBChange(final String field, final Class<T> className){
         return new ValueEventListener() {

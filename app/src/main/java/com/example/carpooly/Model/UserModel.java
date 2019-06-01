@@ -60,6 +60,6 @@ public abstract class UserModel {
         return auth;
     }
 
-//    public abstract void write();
+//    public abstract void writeOnRegistration();
 //    public abstract void read(String fieldName);
 }

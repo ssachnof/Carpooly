@@ -59,7 +59,7 @@ public class UserInfoModel extends UserModel {
     private FirebaseStorage storage;
     private FirebaseFirestore database;
     //todo: make sure that at some point you modify the security settings on the db so that a user
-    // can't write to another one's data!!!!!!
+    // can't writeOnRegistration to another one's data!!!!!!
 
 
     //todo: change privacy mode active to be stored as an integer value instead of a boolean!!!!!
@@ -94,7 +94,7 @@ public class UserInfoModel extends UserModel {
     public String getPhoneNumber(){return phoneNumber;}
 
 
-    public void write() {
+    public void writeOnRegistration() {
         this.database = FirebaseFirestore.getInstance();
         this.user = getUser();
         Map<String, Object> userData = new HashMap<>();
