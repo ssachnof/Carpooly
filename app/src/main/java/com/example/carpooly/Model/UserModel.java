@@ -8,6 +8,7 @@ import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -31,6 +32,7 @@ public abstract class UserModel {
         this.database = FirebaseFirestore.getInstance();
         this.auth = FirebaseAuth.getInstance();
         this.user = auth.getCurrentUser();
+        //todo: we should probably read from the db here and set fields!!!!!
         Firebase.setAndroidContext(context);
     }
 

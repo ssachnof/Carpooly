@@ -8,12 +8,12 @@ import android.widget.TextView;
 
 import com.example.carpooly.R;
 
-public class DisplayLoginMessage extends AppCompatActivity {
+public class DisplayHomeScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_message);
+        setContentView(R.layout.home_screen);
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         String username = intent.getStringExtra(LoginUserActivity.getUserEmailKey());
@@ -32,4 +32,6 @@ public class DisplayLoginMessage extends AppCompatActivity {
         Intent intent = new Intent(this, CreateRideActivity.class);
         startActivity(intent);
     }
+
+
 }

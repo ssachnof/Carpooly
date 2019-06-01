@@ -12,12 +12,12 @@
         <activity android:name=".Controller.CreateRideActivity"></activity>
         <activity
             android:name=".Controller.AccountControl"
-            android:parentActivityName=".Controller.DisplayLoginMessage" />
+            android:parentActivityName=".Controller.DisplayHomeScreen" />
         <activity
             android:name=".Controller.OpenRegPageController"
             android:parentActivityName=".Controller.LoginUserActivity" />
         <activity
-            android:name=".Controller.DisplayLoginMessage"
+            android:name=".Controller.DisplayHomeScreen"
             android:parentActivityName=".Controller.LoginUserActivity" />
         <activity android:name=".Controller.LoginUserActivity">
             <intent-filter>

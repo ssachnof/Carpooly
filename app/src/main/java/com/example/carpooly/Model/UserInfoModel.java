@@ -58,6 +58,9 @@ public class UserInfoModel extends UserModel {
     private FirebaseUser user;
     private FirebaseStorage storage;
     private FirebaseFirestore database;
+    private DocumentReference currentUserInfoDocRef;
+    private String userRating;
+    private String privacyMode;
     //todo: make sure that at some point you modify the security settings on the db so that a user
     // can't writeOnRegistration to another one's data!!!!!!
 
@@ -75,12 +78,22 @@ public class UserInfoModel extends UserModel {
         this.profilePicture = getDefaultProfilePicture();
         this.storage = FirebaseStorage.getInstance();
         this.database = FirebaseFirestore.getInstance();
+        this.user = getUser();
+        this.privacyMode = "Private";
+        this.userRating = "3.0";
+        this.currentUserInfoDocRef = database.collection("Users").document(user.getUid());
 
     }
 
     public UserInfoModel(Context context){
         super(context);
+        this.user = super.getAuth().getCurrentUser();
+        this.database = FirebaseFirestore.getInstance();
+        this.currentUserInfoDocRef = database.collection("Users").document(user.getUid());
+
     }
+
+    public UserInfoModel(){}
 
     public Task<AuthResult> registerUser() {
         return super.getAuth().createUserWithEmailAndPassword(super.getEmail(), super.getPassword());
@@ -99,12 +112,23 @@ public class UserInfoModel extends UserModel {
         this.user = getUser();
         Map<String, Object> userData = new HashMap<>();
         userData.put("Name", this.name);
-        userData.put("Rating", "3.0");
+        userData.put("Rating", this.userRating);
         userData.put("Email", super.getEmail());
         userData.put("Phone", this.phoneNumber);
-        userData.put("PrivacyMode", "Private");
+        userData.put("PrivacyMode", this.privacyMode);
         database.collection("Users").document(this.user.getUid()).
                 set(userData, SetOptions.merge());//set options.merge prevents documents from being overwritten
+    }
+
+    public ArrayList<UserInfoModel> read(){
+        Map<String, Object> userData = currentUserInfoDocRef.get().getResult().getData();
+        this.name = (String)userData.get("Name");
+        this.userRating = (String)userData.get("Rating");
+        this.phoneNumber = (String)userData.get("Phone");
+        this.privacyMode = (String)userData.get("PrivacyMode");
+        ArrayList<UserInfoModel> output = new ArrayList<>();
+        output.add(this);
+        return output;
     }
 
     public Map<String, Object> read(@Nullable DocumentSnapshot documentSnapshot,
