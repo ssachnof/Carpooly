@@ -97,54 +97,6 @@ public class AccountControl extends AppCompatActivity {
             }
         });
     }
-    public <T extends Object> ValueEventListener getDBChange(final String field, final Class<T> className){
-        return new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (field.equals("Email")){
-                    TextView userEmail = ((TextView) findViewById(R.id.Email));
-                    userEmail.setText(dataSnapshot.getValue(String.class));
-
-                }
-                else if (field.equals("Name")){
-                    TextView userEmail = ((TextView) findViewById(R.id.Name));
-                    userEmail.setText(dataSnapshot.getValue(String.class));
-
-                }
-
-                else if(field.equals("Password")){
-                    LOGGER.log(Level.SEVERE, "ACCOUNT CONTROL: PASSWORD VALUE LISTENTER UNIMPLEMENTED");
-                    throw new IllegalArgumentException();
-                }
-
-                else if (field.equals("Phone")){
-                    TextView userPhone = ((TextView) findViewById(R.id.PhoneNumber));
-                    userPhone.setText(dataSnapshot.getValue(String.class));
-                }
-
-                else if (field.equals("Rating")){
-                    RatingBar userRating = ((RatingBar) findViewById(R.id.ratingBar));
-                    userRating.setRating(dataSnapshot.getValue(float.class));
-
-                }
-
-                else if (field.equals("PrivacyModeActive")){
-                    Spinner privacyOptions = findViewById(R.id.PrivacyModeActive);
-                    privacyOptions.setSelection(dataSnapshot.getValue(int.class));
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                LOGGER.log(Level.SEVERE, "ACCOUNT CONTROL: DATABASE ERROR");
-                throw new IllegalArgumentException();
-
-            }
-        };
-
-    }
 
     public void setViewObjects(String email, String name, float rating,
                                   String phone, String privacyMode){

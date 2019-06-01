@@ -27,4 +27,9 @@ public class DisplayLoginMessage extends AppCompatActivity {
         Intent intent = new Intent(this, AccountControl.class);
         startActivity(intent);
     }
+
+    public void openCreateNewRidePage(View view){
+        Intent intent = new Intent(this, CreateRideActivity.class);
+        startActivity(intent);
+    }
 }
