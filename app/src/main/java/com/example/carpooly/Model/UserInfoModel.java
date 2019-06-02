@@ -60,7 +60,7 @@ public class UserInfoModel extends UserModel {
 
     private FirebaseUser user;
     private FirebaseStorage storage;
-    final private FirebaseFirestore database = FirebaseFirestore.getInstance();
+    FirebaseFirestore database = Database.getDBInstance(); // replaced line below - testing
     private DocumentReference currentUserInfoDocRef;
     final private CollectionReference usersCollectionRef = database.collection("Users");
     final private CollectionReference ridesCollectionRef = database.collection("Rides");
@@ -81,7 +81,7 @@ public class UserInfoModel extends UserModel {
         this.name = firstName + " " + lastName;//this should probably be done in controller!!!!!
         this.phoneNumber = phoneNumber;
         this.profilePicture = getDefaultProfilePicture();
-        this.storage = FirebaseStorage.getInstance();
+        this.storage = Database.getStorageInstance();
         this.user = getUser();
         this.privacyMode = "Private";
         this.userRating = "3.0";
