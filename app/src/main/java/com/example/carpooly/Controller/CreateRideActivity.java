@@ -49,8 +49,6 @@ public class CreateRideActivity extends AppCompatActivity {
             dateFormatter = new SimpleDateFormat("HH:mm");
             final Date departureTime = dateFormatter.parse(depTimeField.getText().toString());
             final Context activityContext = this;
-            //todo: you need to create functions inside model that 1 creates the query and 2 grabs the result from
-            // the query snapshot
             ListenerRegistration driversQuery = usersSearcher.queryCollection(usersSearcher.getUId()).addSnapshotListener(
                     new EventListener<QuerySnapshot>() {
                         @Override

@@ -66,13 +66,6 @@ public class UserInfoModel extends UserModel {
     final private CollectionReference ridesCollectionRef = database.collection("Rides");
     private String userRating;
     private String privacyMode;
-    //todo: make sure that at some point you modify the security settings on the db so that a user
-    // can't writeOnRegistration to another one's data!!!!!!
-
-
-    //todo: change privacy mode active to be stored as an integer value instead of a boolean!!!!!
-
-    //todo: have controller pass in name as 1 field instead of 2
 
     public UserInfoModel(String email, String pass, String confirm_pass, String phoneNumber,
                          String firstName, String lastName, Context context) {
