@@ -22,7 +22,7 @@ public abstract class UserModel {
     public UserModel(String email, String password, Context context) {
         this.email = email;
         this.password = password;
-        this.auth = FirebaseAuth.getInstance();
+        this.auth = Database.getAuthInstance();
         this.database = Database.getDBInstance();
         Firebase.setAndroidContext(context);
     }
