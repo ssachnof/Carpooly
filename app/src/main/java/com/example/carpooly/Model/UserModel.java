@@ -23,14 +23,13 @@ public abstract class UserModel {
         this.email = email;
         this.password = password;
         this.auth = FirebaseAuth.getInstance();
-        this.database = FirebaseFirestore.getInstance();
+        this.database = Database.getDBInstance();
         Firebase.setAndroidContext(context);
     }
 
     public UserModel(Context context){
-        this.auth = FirebaseAuth.getInstance();
-        this.database = FirebaseFirestore.getInstance();
-        this.auth = FirebaseAuth.getInstance();
+        this.auth = Database.getAuthInstance();
+        this.database = Database.getDBInstance();
         this.user = auth.getCurrentUser();
         //todo: we should probably read from the db here and set fields!!!!!
         Firebase.setAndroidContext(context);
@@ -40,7 +39,7 @@ public abstract class UserModel {
     public UserModel(){}
 
     public void setUser(){
-        this.auth = FirebaseAuth.getInstance();
+        this.auth = Database.getAuthInstance();
         this.user = auth.getCurrentUser();
     }
 
@@ -53,12 +52,12 @@ public abstract class UserModel {
     }
 
     public FirebaseFirestore getDatabase(){
-        this.database = FirebaseFirestore.getInstance();
+        this.database = Database.getDBInstance();
         return this.database;
     }
 
     public FirebaseAuth getAuth(){
-        this.auth = FirebaseAuth.getInstance();
+        this.auth = Database.getAuthInstance();
         return auth;
     }
 
