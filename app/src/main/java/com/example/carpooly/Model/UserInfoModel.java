@@ -15,6 +15,7 @@ import com.google.gson.JsonPrimitive;*/
 import com.example.carpooly.DatabaseReader;
 import com.example.carpooly.DatabaseWriter;
 import com.example.carpooly.HashMapInitializer;
+import com.example.carpooly.Search;
 import com.example.carpooly.UserObject;
 import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.Task;
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -35,6 +37,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -57,8 +60,10 @@ public class UserInfoModel extends UserModel {
 
     private FirebaseUser user;
     private FirebaseStorage storage;
-    private FirebaseFirestore database;
+    final private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private DocumentReference currentUserInfoDocRef;
+    final private CollectionReference usersCollectionRef = database.collection("Users");
+    final private CollectionReference ridesCollectionRef = database.collection("Rides");
     private String userRating;
     private String privacyMode;
     //todo: make sure that at some point you modify the security settings on the db so that a user
@@ -77,7 +82,6 @@ public class UserInfoModel extends UserModel {
         this.phoneNumber = phoneNumber;
         this.profilePicture = getDefaultProfilePicture();
         this.storage = FirebaseStorage.getInstance();
-        this.database = FirebaseFirestore.getInstance();
         this.user = getUser();
         this.privacyMode = "Private";
         this.userRating = "3.0";
@@ -88,7 +92,6 @@ public class UserInfoModel extends UserModel {
     public UserInfoModel(Context context){
         super(context);
         this.user = super.getAuth().getCurrentUser();
-        this.database = FirebaseFirestore.getInstance();
         this.currentUserInfoDocRef = database.collection("Users").document(user.getUid());
 
     }
@@ -108,7 +111,6 @@ public class UserInfoModel extends UserModel {
 
 
     public void writeOnRegistration() {
-        this.database = FirebaseFirestore.getInstance();
         this.user = getUser();
         Map<String, Object> userData = new HashMap<>();
         userData.put("Name", this.name);
@@ -116,6 +118,7 @@ public class UserInfoModel extends UserModel {
         userData.put("Email", super.getEmail());
         userData.put("Phone", this.phoneNumber);
         userData.put("PrivacyMode", this.privacyMode);
+        userData.put("UserId", super.getUId());
         database.collection("Users").document(this.user.getUid()).
                 set(userData, SetOptions.merge());//set options.merge prevents documents from being overwritten
     }
@@ -146,15 +149,9 @@ public class UserInfoModel extends UserModel {
             throw new NullPointerException();
         }
     }
-//    public DatabaseReference getUserReference(){
-//        this.user = super.getUser();
-//        return database.getReference().child("Users").child(user.getUid());
-//    }
 
-//    public DatabaseReference getChild(String fieldName){
-//        this.database = FirebaseFirestore.getInstance()
-//        this.user = getUser();
-//        DatabaseReference ref = getUserReference();
-//        return ref.child(fieldName);
-//    }
+    public CollectionReference getUsersCollection(){return usersCollectionRef;}
+    public CollectionReference getRidesCollectionRef(){return ridesCollectionRef;}
+    public void setName(String name){this.name = name;}
+
 }

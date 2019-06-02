@@ -20,7 +20,7 @@ import java.util.Map;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-public class RideModel extends UserInfoModel{
+public class RideModel extends UsersSearch{
     private String driver;
     private ArrayList<String> passengers;
     private Date departureDate;
@@ -32,17 +32,16 @@ public class RideModel extends UserInfoModel{
     private CollectionReference rideCollectionRef;
 
 
-    public RideModel(Date departureDate, Date departureTime, Context context){
+    public RideModel(Date departureDate, Date departureTime, String DriverName, Context context){
         super(context);
         this.driver = super.getUId();
-        this.driverDisplayName = super.getName();
         this.departureDate = departureDate;
         this.maxCapacity = 4;
         this.passengers = new ArrayList<>();
         this.departureTime = departureTime;
+        this.driverDisplayName = DriverName;
         this.rideCollectionRef = super.getDatabase().collection("Rides");
         this.rideDocumentReference = rideCollectionRef.document();
-        write();
     }
 
     public RideModel(String driverId, String driverName, Date departureDate, Date departureTime,
@@ -59,7 +58,6 @@ public class RideModel extends UserInfoModel{
     }
     public void write(){
         Map<String, Object> rideData = new HashMap<>();
-        setDriverDisplayName();
         rideData.put("DriverName", driverDisplayName);//in order for this not to be null, you will have to query the users collection
         rideData.put("DriverId", driver);
         rideData.put("MaxCapacity", maxCapacity);
