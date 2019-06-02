@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controller.DisplayLoginMessage">
+    tools:context=".Controller.DisplayHomeScreen">
 
         <TextView
             android:id="@+id/textView1"
@@ -15,9 +15,9 @@
             android:layout_marginTop="105dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="34dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            android:layout_marginBottom="215dp"
+            android:text="Home Screen View"
+            app:layout_constraintBottom_toTopOf="@+id/button2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.489"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,12 +31,41 @@
             android:layout_marginTop="34dp"
             android:layout_marginBottom="400dp"
             android:onClick="openAccountPage"
-            android:text="Button"
+            android:text="account\npage"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView1"
             tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="259dp"
+            android:onClick="openCreateNewRidePage"
+            android:text="Create Ride"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+        <LinearLayout
+            android:id="@+id/RideDetails"
+            android:layout_width="398dp"
+            android:layout_height="108dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginBottom="71dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button2"></LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>

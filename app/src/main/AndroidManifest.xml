@@ -9,12 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.AccountControl"
-            android:parentActivityName=".Controller.DisplayLoginMessage"></activity>
-        <activity android:name=".Controller.OpenRegPageController"
-            android:parentActivityName=".Controller.LoginUserActivity"></activity>
-        <activity android:name=".Controller.DisplayLoginMessage"
-            android:parentActivityName=".Controller.LoginUserActivity"/>
+        <activity android:name=".RideController"></activity>
+        <activity android:name=".Controller.CreateRideActivity" />
+        <activity
+            android:name=".Controller.AccountControl"
+            android:parentActivityName=".Controller.DisplayHomeScreen" />
+        <activity
+            android:name=".Controller.OpenRegPageController"
+            android:parentActivityName=".Controller.LoginUserActivity" />
+        <activity
+            android:name=".Controller.DisplayHomeScreen"
+            android:parentActivityName=".Controller.LoginUserActivity" />
         <activity android:name=".Controller.LoginUserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Model.UserModel"></activity>
+        <activity android:name=".Model.UserModel" />
     </application>
 
 </manifest>

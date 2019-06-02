@@ -9,7 +9,9 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -35,6 +37,7 @@ import com.google.firestore.admin.v1beta1.IndexFieldOrBuilder;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.*;
@@ -84,55 +87,15 @@ public class AccountControl extends AppCompatActivity {
 
             }
         });
-
-    }
-    public <T extends Object> ValueEventListener getDBChange(final String field, final Class<T> className){
-        return new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (field.equals("Email")){
-                    TextView userEmail = ((TextView) findViewById(R.id.Email));
-                    userEmail.setText(dataSnapshot.getValue(String.class));
-
-                }
-                else if (field.equals("Name")){
-                    TextView userEmail = ((TextView) findViewById(R.id.Name));
-                    userEmail.setText(dataSnapshot.getValue(String.class));
-
-                }
-
-                else if(field.equals("Password")){
-                    LOGGER.log(Level.SEVERE, "ACCOUNT CONTROL: PASSWORD VALUE LISTENTER UNIMPLEMENTED");
-                    throw new IllegalArgumentException();
-                }
-
-                else if (field.equals("Phone")){
-                    TextView userPhone = ((TextView) findViewById(R.id.PhoneNumber));
-                    userPhone.setText(dataSnapshot.getValue(String.class));
-                }
-
-                else if (field.equals("Rating")){
-                    RatingBar userRating = ((RatingBar) findViewById(R.id.ratingBar));
-                    userRating.setRating(dataSnapshot.getValue(float.class));
-
-                }
-
-                else if (field.equals("PrivacyModeActive")){
-                    Spinner privacyOptions = findViewById(R.id.PrivacyModeActive);
-                    privacyOptions.setSelection(dataSnapshot.getValue(int.class));
-
-                }
-
+        privacyOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                userDataRef.update("PrivacyMode", adapterView.getItemAtPosition(i).toString());
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                LOGGER.log(Level.SEVERE, "ACCOUNT CONTROL: DATABASE ERROR");
-                throw new IllegalArgumentException();
-
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                return;
             }
-        };
-
+        });
     }
 
     public void setViewObjects(String email, String name, float rating,
