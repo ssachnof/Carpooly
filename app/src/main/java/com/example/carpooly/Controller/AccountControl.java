@@ -11,8 +11,13 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+<<<<<<< HEAD
 import android.view.MenuItem;
+=======
+import android.view.View;
+>>>>>>> 2b80471955ba392a328cf24da85ded9b13b160d5
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -38,6 +43,7 @@ import com.google.firestore.admin.v1beta1.IndexFieldOrBuilder;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.*;
@@ -87,6 +93,7 @@ public class AccountControl extends AppCompatActivity {
 
             }
         });
+<<<<<<< HEAD
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navbar);
@@ -149,16 +156,17 @@ public class AccountControl extends AppCompatActivity {
 
                 }
 
+=======
+        privacyOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                userDataRef.update("PrivacyMode", adapterView.getItemAtPosition(i).toString());
+>>>>>>> 2b80471955ba392a328cf24da85ded9b13b160d5
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                LOGGER.log(Level.SEVERE, "ACCOUNT CONTROL: DATABASE ERROR");
-                throw new IllegalArgumentException();
-
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                return;
             }
-        };
-
+        });
     }
 
     public void setViewObjects(String email, String name, float rating,

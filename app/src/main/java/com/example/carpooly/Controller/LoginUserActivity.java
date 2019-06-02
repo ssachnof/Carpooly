@@ -88,7 +88,7 @@ public class LoginUserActivity extends AppCompatActivity implements viewUpdater 
         });
     }
 
-    public Intent getNextIntent(){ return new Intent(this, DisplayLoginMessage.class); }
+    public Intent getNextIntent(){ return new Intent(this, DisplayHomeScreen.class); }
 
 
     // note: this function will change when you add the home screen in

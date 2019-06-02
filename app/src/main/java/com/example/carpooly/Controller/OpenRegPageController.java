@@ -53,7 +53,7 @@ public class OpenRegPageController extends AppCompatActivity implements viewUpda
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         FirebaseUser user = model.getUser();
-                        model.write();
+                        model.writeOnRegistration();
                         updateUI(user);
                     } else {
                         updateUI(null);

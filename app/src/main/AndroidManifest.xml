@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+<<<<<<< HEAD
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity android:name=".Controller.AccountControl"
             android:parentActivityName=".Controller.DisplayLoginMessage"></activity>
@@ -15,6 +16,19 @@
             android:parentActivityName=".Controller.LoginUserActivity"></activity>
         <activity android:name=".Controller.DisplayLoginMessage"
             android:parentActivityName=".Controller.LoginUserActivity"/>
+=======
+        android:theme="@style/AppTheme">
+        <activity android:name=".Controller.CreateRideActivity" />
+        <activity
+            android:name=".Controller.AccountControl"
+            android:parentActivityName=".Controller.DisplayHomeScreen" />
+        <activity
+            android:name=".Controller.OpenRegPageController"
+            android:parentActivityName=".Controller.LoginUserActivity" />
+        <activity
+            android:name=".Controller.DisplayHomeScreen"
+            android:parentActivityName=".Controller.LoginUserActivity" />
+>>>>>>> 2b80471955ba392a328cf24da85ded9b13b160d5
         <activity android:name=".Controller.LoginUserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +36,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Model.UserModel"></activity>
+        <activity android:name=".Model.UserModel" />
     </application>
 
 </manifest>
