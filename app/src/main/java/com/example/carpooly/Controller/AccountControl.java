@@ -1,5 +1,6 @@
 package com.example.carpooly.Controller;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -7,8 +8,12 @@ import android.provider.ContactsContract;
 import android.renderscript.Sampler;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -87,6 +92,32 @@ public class AccountControl extends AppCompatActivity {
 
             }
         });
+
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navbar);
+
+        bottomNavigationView.setSelectedItemId(R.id.action_account);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_home:
+                                openHomePage();
+
+                            case R.id.action_myRides:
+
+                            case R.id.action_account:
+
+
+                        }
+                        return true;
+                    }
+                });
+
+
         privacyOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 userDataRef.update("PrivacyMode", adapterView.getItemAtPosition(i).toString());
@@ -120,6 +151,11 @@ public class AccountControl extends AppCompatActivity {
             userPrivacy.setSelection(0);
         }
 
+    }
+
+    public void openHomePage(){
+        Intent intent = new Intent(this, DisplayHomeScreen.class);
+        startActivity(intent);
     }
 
 }
