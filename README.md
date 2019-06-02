@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/ssachnof/Carpooly.svg?branch=develop)](https://travis-ci.com/ssachnof/Carpooly)
 # Carpooly Repo:
 
 ### Contributors:
