@@ -1,5 +1,6 @@
 package com.example.carpooly.Controller;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -7,8 +8,10 @@ import android.provider.ContactsContract;
 import android.renderscript.Sampler;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -85,6 +88,29 @@ public class AccountControl extends AppCompatActivity {
             }
         });
 
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navbar);
+
+        bottomNavigationView.setSelectedItemId(R.id.action_account);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_home:
+                                openHomePage();
+
+                            case R.id.action_myRides:
+
+                            case R.id.action_account:
+
+
+                        }
+                        return true;
+                    }
+                });
+
     }
     public <T extends Object> ValueEventListener getDBChange(final String field, final Class<T> className){
         return new ValueEventListener() {
@@ -157,6 +183,11 @@ public class AccountControl extends AppCompatActivity {
             userPrivacy.setSelection(0);
         }
 
+    }
+
+    public void openHomePage(){
+        Intent intent = new Intent(this, DisplayLoginMessage.class);
+        startActivity(intent);
     }
 
 }
