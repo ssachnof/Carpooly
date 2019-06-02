@@ -117,49 +117,10 @@ public class AccountControl extends AppCompatActivity {
                     }
                 });
 
-    }
-    public <T extends Object> ValueEventListener getDBChange(final String field, final Class<T> className){
-        return new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (field.equals("Email")){
-                    TextView userEmail = ((TextView) findViewById(R.id.Email));
-                    userEmail.setText(dataSnapshot.getValue(String.class));
 
-                }
-                else if (field.equals("Name")){
-                    TextView userEmail = ((TextView) findViewById(R.id.Name));
-                    userEmail.setText(dataSnapshot.getValue(String.class));
-
-                }
-
-                else if(field.equals("Password")){
-                    LOGGER.log(Level.SEVERE, "ACCOUNT CONTROL: PASSWORD VALUE LISTENTER UNIMPLEMENTED");
-                    throw new IllegalArgumentException();
-                }
-
-                else if (field.equals("Phone")){
-                    TextView userPhone = ((TextView) findViewById(R.id.PhoneNumber));
-                    userPhone.setText(dataSnapshot.getValue(String.class));
-                }
-
-                else if (field.equals("Rating")){
-                    RatingBar userRating = ((RatingBar) findViewById(R.id.ratingBar));
-                    userRating.setRating(dataSnapshot.getValue(float.class));
-
-                }
-
-                else if (field.equals("PrivacyModeActive")){
-                    Spinner privacyOptions = findViewById(R.id.PrivacyModeActive);
-                    privacyOptions.setSelection(dataSnapshot.getValue(int.class));
-
-                }
-
-=======
         privacyOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 userDataRef.update("PrivacyMode", adapterView.getItemAtPosition(i).toString());
->>>>>>> 2b80471955ba392a328cf24da85ded9b13b160d5
             }
 
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -193,7 +154,7 @@ public class AccountControl extends AppCompatActivity {
     }
 
     public void openHomePage(){
-        Intent intent = new Intent(this, DisplayLoginMessage.class);
+        Intent intent = new Intent(this, DisplayHomeScreen.class);
         startActivity(intent);
     }
 
