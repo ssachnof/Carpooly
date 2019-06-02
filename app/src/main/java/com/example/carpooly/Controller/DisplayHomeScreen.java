@@ -66,6 +66,7 @@ public class DisplayHomeScreen extends AppCompatActivity {
 //        layout.addView(tv);
 //
 //    }
+    //unecessary comment
 
     public void addRideToPage(RideModel ride){
         LinearLayout layout = ((LinearLayout)findViewById(R.id.RideDetails));
