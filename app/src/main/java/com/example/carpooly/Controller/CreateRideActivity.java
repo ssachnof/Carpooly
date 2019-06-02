@@ -35,6 +35,7 @@ public class CreateRideActivity extends AppCompatActivity {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
         EditText depDateField = ((EditText)findViewById(R.id.DepartureDate));
         EditText depTimeField = ((EditText)findViewById(R.id.DepartureTime));
+        final EditText destination = ((EditText) findViewById(R.id.DestinationCity));
 
         try {
             final Date departureDate = dateFormatter.parse(depDateField.getText().toString());
@@ -49,7 +50,7 @@ public class CreateRideActivity extends AppCompatActivity {
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                     String driverName = (String)queryDocumentSnapshots.getDocuments().get(0).get("Name");
                     RideModel newRideModel = new RideModel(departureDate, departureTime, driverName,
-                            activityContext);
+                            destination.getText().toString(), activityContext);
                     newRideModel.write();
                 }
             });
