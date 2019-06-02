@@ -1,8 +1,10 @@
 package com.example.carpooly;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.Map;
 public interface Search {
 
     //retursn an arraylist of documents that satisfy contrain--will have to have cases for this
-    public List<Map<String, Object>> queryCollection();
+//    public Task<QuerySnapshot> queryCollection();
     // searches for a specific instance of a class
-    public Map<String, Object> queryCollection(String contraint);
+    public Task<QuerySnapshot> queryCollection(String contraint);
 }

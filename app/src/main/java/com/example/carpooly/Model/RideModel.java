@@ -9,6 +9,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.model.Document;
@@ -109,7 +110,6 @@ public class RideModel extends UsersSearch{
     public String getDriverName(){return this.driverDisplayName;}
     public Date getDepartureDate(){return this.departureDate;}
     public Date getDepartureTime(){return this.departureTime;}
-
 
 //    @Override
 //    public ArrayList<UserInfoModel> read(){
