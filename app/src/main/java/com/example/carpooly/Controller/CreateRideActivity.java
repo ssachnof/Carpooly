@@ -44,11 +44,10 @@ public class CreateRideActivity extends AppCompatActivity {
             final Context activityContext = this;
             //todo: you need to create functions inside model that 1 creates the query and 2 grabs the result from
             // the query snapshot
-            Task<QuerySnapshot> driversQuery = usersSearcher.getUsersCollection().whereEqualTo("UserId", usersSearcher.getUId()).
-                    get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            Task<QuerySnapshot> driversQuery = usersSearcher.queryCollection(usersSearcher.getUId()).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    String driverName = (String)queryDocumentSnapshots.getDocuments().get(0).get("Name");
+                    String driverName = usersSearcher.getDriverName(queryDocumentSnapshots);
                     RideModel newRideModel = new RideModel(departureDate, departureTime, driverName,
                             destination.getText().toString(), activityContext);
                     newRideModel.write();

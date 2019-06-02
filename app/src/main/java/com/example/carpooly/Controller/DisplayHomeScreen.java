@@ -35,11 +35,6 @@ public class DisplayHomeScreen extends AppCompatActivity {
         setContentView(R.layout.home_screen);
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        String username = intent.getStringExtra(LoginUserActivity.getUserEmailKey());
-
-        //display the username
-//        TextView textView1 = findViewById(R.id.textView1);
-//        textView1.setText(username + " successfully logged in!!!!!!");
 
         this.rideModel = new RideModel(this);
         Task<QuerySnapshot> task = rideModel.getRidesCollectionRef().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -57,16 +52,6 @@ public class DisplayHomeScreen extends AppCompatActivity {
         Intent intent = new Intent(this, AccountControl.class);
         startActivity(intent);
     }
-
-//    public void addRideToPage(String text) {
-//        LinearLayout layout = ((LinearLayout)findViewById(R.id.RideDetails));
-//        TextView tv = new TextView(this);
-//        tv.setText(text + "\n\n");
-//        int numViews = layout.getChildCount();
-//        layout.addView(tv);
-//
-//    }
-    //unecessary comment
 
     public void addRideToPage(RideModel ride){
         LinearLayout layout = ((LinearLayout)findViewById(R.id.RideDetails));
