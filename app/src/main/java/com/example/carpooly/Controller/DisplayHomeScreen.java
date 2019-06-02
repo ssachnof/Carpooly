@@ -18,6 +18,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.api.Distribution;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 public class DisplayHomeScreen extends AppCompatActivity {
     private RideModel rideModel;
 
@@ -30,16 +38,17 @@ public class DisplayHomeScreen extends AppCompatActivity {
         String username = intent.getStringExtra(LoginUserActivity.getUserEmailKey());
 
         //display the username
-        TextView textView1 = findViewById(R.id.textView1);
-        textView1.setText(username + " successfully logged in!!!!!!");
-        View v = findViewById(R.id.rd);
+//        TextView textView1 = findViewById(R.id.textView1);
+//        textView1.setText(username + " successfully logged in!!!!!!");
 
         this.rideModel = new RideModel(this);
         Task<QuerySnapshot> task = rideModel.getRidesCollectionRef().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                addRideToPage("this is a test");
-                addRideToPage("test2");
+                List<RideModel> rideDetails = rideModel.getRides(queryDocumentSnapshots);
+                for (RideModel ride : rideDetails){
+                    addRideToPage(ride);
+                }
             }
         });
     }
@@ -49,12 +58,46 @@ public class DisplayHomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void addRideToPage(String text) {
+//    public void addRideToPage(String text) {
+//        LinearLayout layout = ((LinearLayout)findViewById(R.id.RideDetails));
+//        TextView tv = new TextView(this);
+//        tv.setText(text + "\n\n");
+//        int numViews = layout.getChildCount();
+//        layout.addView(tv);
+//
+//    }
+
+    public void addRideToPage(RideModel ride){
         LinearLayout layout = ((LinearLayout)findViewById(R.id.RideDetails));
         TextView tv = new TextView(this);
-        tv.setText(text + "\n\n");
-        int numViews = layout.getChildCount();
+        rideDetailsToText(ride, tv);
         layout.addView(tv);
+    }
+
+    private void rideDetailsToText(RideModel ride, TextView tv){
+        String destination = ride.getDestination();
+        String driverName = ride.getDriverName();
+        Date departureDate = ride.getDepartureDate();
+        Date departuretime = ride.getDepartureTime();
+        String text = "destination: " + destination + "\n";
+        text += "driverName: " + driverName + "\n";
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(departureDate);
+        String month = Integer.toString(cal.get(Calendar.MONTH));
+        String year = Integer.toString(cal.get(Calendar.YEAR));
+        String day = Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
+        cal.setTime(departuretime);
+        String hours = Integer.toString(cal.get(Calendar.HOUR_OF_DAY));
+        String minutes = Integer.toString(cal.get(Calendar.MINUTE));
+        if (minutes.length() == 1){
+            minutes = "0" + minutes;
+        }
+
+        text += "Departure Date: " + month + "/" + day + "/" + year + "\n";
+        text += "Departure Time: " + hours + ":" + minutes + "\n";
+        tv.setText(text);
+
 
     }
 
