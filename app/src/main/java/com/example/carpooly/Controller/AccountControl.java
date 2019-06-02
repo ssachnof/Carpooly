@@ -11,11 +11,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-<<<<<<< HEAD
+
 import android.view.MenuItem;
-=======
+
 import android.view.View;
->>>>>>> 2b80471955ba392a328cf24da85ded9b13b160d5
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -93,7 +92,7 @@ public class AccountControl extends AppCompatActivity {
 
             }
         });
-<<<<<<< HEAD
+
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navbar);
