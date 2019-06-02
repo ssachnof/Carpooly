@@ -12,11 +12,18 @@ import com.example.carpooly.Model.UsersSearch;
 import com.example.carpooly.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Nullable;
 
 public class CreateRideActivity extends AppCompatActivity {
 
@@ -44,15 +51,17 @@ public class CreateRideActivity extends AppCompatActivity {
             final Context activityContext = this;
             //todo: you need to create functions inside model that 1 creates the query and 2 grabs the result from
             // the query snapshot
-            Task<QuerySnapshot> driversQuery = usersSearcher.queryCollection(usersSearcher.getUId()).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                @Override
-                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    String driverName = usersSearcher.getDriverName(queryDocumentSnapshots);
-                    RideModel newRideModel = new RideModel(departureDate, departureTime, driverName,
-                            destination.getText().toString(), activityContext);
-                    newRideModel.write();
-                }
-            });
+            ListenerRegistration driversQuery = usersSearcher.queryCollection(usersSearcher.getUId()).addSnapshotListener(
+                    new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                            String driverName = usersSearcher.getDriverName(queryDocumentSnapshots);
+                            RideModel newRideModel = new RideModel(departureDate, departureTime, driverName,
+                                    destination.getText().toString(), activityContext);
+                            newRideModel.write();
+                        }
+                    }
+            );
             Intent intent = new Intent(this, DisplayHomeScreen.class);
             startActivity(intent);
 

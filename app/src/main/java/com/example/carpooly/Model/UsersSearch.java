@@ -30,9 +30,9 @@ public class UsersSearch extends UserInfoModel implements Search {
 //        return usersData;
 //    }
     //searches for a specific user
-    public Task<QuerySnapshot> queryCollection(String UId){
+    public Query queryCollection(String UId){
         Query findUserQuery = usersRef.whereEqualTo("UserId", UId);
-        return findUserQuery.get();
+        return findUserQuery;
     }
 
     public CollectionReference getRef(){return usersRef;}
