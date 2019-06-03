@@ -16,12 +16,27 @@ import com.google.firebase.database.DatabaseReference;
 
 public class LoginModel extends UserModel{
     private FirebaseUser user;
+    private static LoginModel singletonModel;
 
-    public LoginModel(String email, String pass, Context context){
+    private LoginModel(String email, String pass, Context context){
         super(email, pass, context);
         this.user = super.getUser();
     }
-
+    public static LoginModel getInstance(String email, String pass, Context context){
+        if(singletonModel == null){
+            singletonModel = new LoginModel(email, pass, context);
+        }
+        return singletonModel;
+    }
+    public LoginModel getInstance(){
+        // todo: error out if this is called but the model has not been initialized
+        /*
+        if(singletonModel == null){
+            throw RuntimeException;
+        }
+        */
+        return singletonModel;
+    }
 
     public Task<AuthResult> signInUser() {
         return super.getAuth().signInWithEmailAndPassword(super.getEmail(), super.getPassword());

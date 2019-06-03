@@ -64,7 +64,7 @@ public class LoginUserActivity extends AppCompatActivity implements viewUpdater 
 
         Intent intent = getIntent();
 
-        this.model = new LoginModel(email, password, this);
+        this.model = LoginModel.getInstance(email, password, this);
         Task<AuthResult> signInTask = model.signInUser();
         signInTask.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
