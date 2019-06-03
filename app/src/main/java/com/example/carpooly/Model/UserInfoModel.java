@@ -60,7 +60,7 @@ public class UserInfoModel extends UserModel {
 
     private FirebaseUser user;
     private FirebaseStorage storage;
-    FirebaseFirestore database = Database.getDBInstance(); // replaced line below - testing
+    private FirebaseFirestore database = Database.getDBInstance(); // replaced line below - testing
     private DocumentReference currentUserInfoDocRef;
     final private CollectionReference usersCollectionRef = database.collection("Users");
     final private CollectionReference ridesCollectionRef = database.collection("Rides");
