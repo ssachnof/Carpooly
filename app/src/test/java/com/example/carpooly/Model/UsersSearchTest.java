@@ -9,4 +9,8 @@ public class UsersSearchTest {
     @Test
     public void getDriverName() {
     }
+
+    @Test
+    public void getRef() {
+    }
 }
