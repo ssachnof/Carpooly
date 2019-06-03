@@ -3,6 +3,7 @@ package com.example.carpooly.Model;
 import android.content.Context;
 
 import com.firebase.ui.auth.data.model.User;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
@@ -14,6 +15,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.model.Document;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,6 +29,7 @@ public class RideModel extends UsersSearch{
     private ArrayList<String> passengers;
     private Date departureDate;
     private Date departureTime;
+    private String rideId;
     private int maxCapacity; //--this will eventually be included in form, for now just set as a constant
     private String driverDisplayName;
     private double estimatedCost;//cost of the gas money to be implemented later
@@ -46,16 +49,18 @@ public class RideModel extends UsersSearch{
         this.destination = destination;
         this.rideCollectionRef = super.getDatabase().collection("Rides");
         this.rideDocumentReference = rideCollectionRef.document();
+        this.rideId = rideDocumentReference.getId();
     }
 
     public RideModel(String driverId, String driverName, Date departureDate, Date departureTime, String destination,
-                     int maxCapacity){
+                     int maxCapacity, String rideId){
         this.driver = driverId;
         this.driverDisplayName = driverName;
         this.departureDate = departureDate;
         this.departureTime = departureTime;
         this.maxCapacity = maxCapacity;
         this.destination = destination;
+        this.rideId = rideId;
     }
     public RideModel(Context context){
         super(context);
@@ -69,6 +74,7 @@ public class RideModel extends UsersSearch{
         rideData.put("DepartureDate", departureDate);
         rideData.put("DepartureTime", departureTime);
         rideData.put("Destination", destination);
+        rideData.put("RideId", rideId);
         rideDocumentReference.set(rideData, SetOptions.merge());
     }
 
@@ -87,10 +93,11 @@ public class RideModel extends UsersSearch{
         String driverName = (String)rideData.get("DriverName");
         String driverId = (String)rideData.get("DriverId");
         long mc = (int)(long)rideData.get("MaxCapacity");
-        Date departureDate = (Date)rideData.get("DepartureDate");
-        Date departureTime = (Date)rideData.get("DepartureTime");
+        Date departureDate = ((Timestamp)rideData.get("DepartureDate")).toDate();
+        Date departureTime = ((Timestamp)rideData.get("DepartureTime")).toDate();
         String destination = (String)rideData.get("Destination");
-        return new RideModel(driverId, driverName, departureDate, departureTime, destination, maxCapacity);
+        String rideId = (String)rideData.get("RideId");
+        return new RideModel(driverId, driverName, departureDate, departureTime, destination, maxCapacity, rideId);
 
     }
 
@@ -110,6 +117,7 @@ public class RideModel extends UsersSearch{
     public String getDriverName(){return this.driverDisplayName;}
     public Date getDepartureDate(){return this.departureDate;}
     public Date getDepartureTime(){return this.departureTime;}
+    public String getRideId(){return rideId;}
 
 //    @Override
 //    public ArrayList<UserInfoModel> read(){

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -58,6 +59,15 @@ public class DisplayHomeScreen extends AppCompatActivity {
         TextView tv = new TextView(this);
         rideDetailsToText(ride, tv);
         layout.addView(tv);
+        Button button = new Button(this);
+        button.setText("Add to Ride");
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("adding user for ride id: " + ride.getRideId());
+            }
+        });
+        layout.addView(button);
     }
 
     private void rideDetailsToText(RideModel ride, TextView tv){
