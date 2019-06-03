@@ -25,15 +25,11 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class UserInfoModelTest {
     @Test
-    public void getName() {
+    public void getAndSetName() {
         UserInfoModel userInfo = new UserInfoModel();
         userInfo.setName("John Doe");
 
         assertEquals("John Doe", userInfo.getName());
 
-    }
-
-    @Test
-    public void setName() {
     }
 }
