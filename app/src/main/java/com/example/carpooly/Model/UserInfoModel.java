@@ -145,6 +145,6 @@ public class UserInfoModel extends UserModel {
 
     public CollectionReference getUsersCollection(){return usersCollectionRef;}
     public CollectionReference getRidesCollectionRef(){return ridesCollectionRef;}
-    public void setName(String name){this.name = name;}
+//    public void setName(String name){this.name = name;}
 
 }

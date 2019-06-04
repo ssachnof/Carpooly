@@ -1,31 +1,27 @@
 package com.example.carpooly.Controller;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.carpooly.Model.RideModel;
+import com.example.carpooly.Model.Rider;
 import com.example.carpooly.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.api.Distribution;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
+import javax.annotation.Nullable;
 
 public class DisplayHomeScreen extends AppCompatActivity {
     private RideModel rideModel;
@@ -65,6 +61,16 @@ public class DisplayHomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("adding user for ride id: " + ride.getRideId());
+//                rider.getUsersCollection().addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//                        String name =(String)queryDocumentSnapshots.getDocuments().get(0).get("Name");
+//                        System.out.println("RIDER2: " + name);
+//                        ride.addRider();
+//                        rider.getName();
+//                    }
+//                });
+                    ride.addRider();
             }
         });
         layout.addView(button);
@@ -86,12 +92,20 @@ public class DisplayHomeScreen extends AppCompatActivity {
         cal.setTime(departuretime);
         String hours = Integer.toString(cal.get(Calendar.HOUR_OF_DAY));
         String minutes = Integer.toString(cal.get(Calendar.MINUTE));
+        List<String> riders = ride.getRiders();
+//        for (String rider : riders){
+//            System.out.println("RIDER NAME: " + rider);
+//        }
         if (minutes.length() == 1){
             minutes = "0" + minutes;
         }
 
         text += "Departure Date: " + month + "/" + day + "/" + year + "\n";
         text += "Departure Time: " + hours + ":" + minutes + "\n";
+        text+= "Riders: ";
+        for(String rider : riders){
+            text += rider;
+        }
         tv.setText(text);
 
 

@@ -2,27 +2,19 @@ package com.example.carpooly.Model;
 
 import android.content.Context;
 
-import com.firebase.ui.auth.data.model.User;
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.model.Document;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 public class RideModel extends UsersSearch{
     private String driver;
@@ -36,6 +28,8 @@ public class RideModel extends UsersSearch{
     private DocumentReference rideDocumentReference;
     private CollectionReference rideCollectionRef;
     private String destination;
+    private List<String> riders;
+    private Context context;
 
 
     public RideModel(Date departureDate, Date departureTime, String DriverName, String destination, Context context){
@@ -50,10 +44,13 @@ public class RideModel extends UsersSearch{
         this.rideCollectionRef = super.getDatabase().collection("Rides");
         this.rideDocumentReference = rideCollectionRef.document();
         this.rideId = rideDocumentReference.getId();
+        this.riders = new ArrayList<>();
+        this.context = context;
     }
 
     public RideModel(String driverId, String driverName, Date departureDate, Date departureTime, String destination,
-                     int maxCapacity, String rideId){
+                     int maxCapacity, String rideId, List<String> riders, Context context){
+        super(context);
         this.driver = driverId;
         this.driverDisplayName = driverName;
         this.departureDate = departureDate;
@@ -61,10 +58,15 @@ public class RideModel extends UsersSearch{
         this.maxCapacity = maxCapacity;
         this.destination = destination;
         this.rideId = rideId;
+        this.riders = riders;
+        this.rideCollectionRef = super.getDatabase().collection("Rides");
+        this.rideDocumentReference = rideCollectionRef.document(rideId);
+        this.context = context;
     }
     public RideModel(Context context){
         super(context);
         this.rideCollectionRef = super.getDatabase().collection("Rides");
+        this.context = context;
     }
     public void write(){
         Map<String, Object> rideData = new HashMap<>();
@@ -75,20 +77,24 @@ public class RideModel extends UsersSearch{
         rideData.put("DepartureTime", departureTime);
         rideData.put("Destination", destination);
         rideData.put("RideId", rideId);
+        rideData.put("Riders", riders);
         rideDocumentReference.set(rideData, SetOptions.merge());
     }
 
     public ArrayList<UserInfoModel> read(){
         ArrayList<UserInfoModel> rides = new ArrayList<>();
         List<DocumentSnapshot> rideDocuments = rideCollectionRef.get().getResult().getDocuments();
+        if (this.context == null){
+            throw new NullPointerException();
+        }
         for(DocumentSnapshot rideDocument : rideDocuments){
-            RideModel ride = getRide(rideDocument);
+            RideModel ride = getRide(rideDocument, this.context);
             rides.add(ride);
         }
         return rides;
     }
 
-    private RideModel getRide(DocumentSnapshot rideDocument){
+    private RideModel getRide(DocumentSnapshot rideDocument, Context context){
         Map<String, Object> rideData = rideDocument.getData();
         String driverName = (String)rideData.get("DriverName");
         String driverId = (String)rideData.get("DriverId");
@@ -97,7 +103,11 @@ public class RideModel extends UsersSearch{
         Date departureTime = ((Timestamp)rideData.get("DepartureTime")).toDate();
         String destination = (String)rideData.get("Destination");
         String rideId = (String)rideData.get("RideId");
-        return new RideModel(driverId, driverName, departureDate, departureTime, destination, maxCapacity, rideId);
+        List<String> riders = (List<String>)rideData.get("Riders");
+        if (this.context == null){
+            throw new NullPointerException();
+        }
+        return new RideModel(driverId, driverName, departureDate, departureTime, destination, maxCapacity, rideId, riders, context);
 
     }
 
@@ -105,23 +115,27 @@ public class RideModel extends UsersSearch{
         ArrayList<RideModel> rides = new ArrayList<>();
         List<DocumentSnapshot> rideDocuments = queryDocumentSnapshots.getDocuments();
         for(DocumentSnapshot rideDocument : rideDocuments){
-            rides.add(getRide(rideDocument));
+            rides.add(getRide(rideDocument, this.context));
         }
         return rides;
     }
     public void setDriverDisplayName(){
         this.driverDisplayName = super.getName();
     }
-
+    public DocumentReference getRideDocumentReference(){
+        return this.rideDocumentReference;
+    }
     public String getDestination(){return this.destination;}
     public String getDriverName(){return this.driverDisplayName;}
     public Date getDepartureDate(){return this.departureDate;}
     public Date getDepartureTime(){return this.departureTime;}
     public String getRideId(){return rideId;}
-
-//    @Override
-//    public ArrayList<UserInfoModel> read(){
-//
-//
-//    }
+    public CollectionReference getRideCollectionRef(){return rideCollectionRef;}
+    public void addRider(){
+        Rider rider = new Rider(context, super.getName(), super.getUId());
+        rider.getRiderName(rideDocumentReference);
+//        System.out.println("Name: " + name);
+//        rideDocumentReference.update("Riders", FieldValue.arrayUnion(name));
+    }
+    public List<String> getRiders(){return riders;}//will eventually want to return rider objects
 }
