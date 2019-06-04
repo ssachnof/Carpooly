@@ -38,10 +38,9 @@ public class LoginUserActivity extends AppCompatActivity implements viewUpdater 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //note this should probably be deal with in the model!!!!!
         this.providers = Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build());
         //todo: might be better to create an onclick listener here and create the model object
-        //this.model.setAuth();
-        //this.actionCodeSettings = enableEmailLinkSignIn();
         setContentView(R.layout.activity_main);
     }
 
@@ -65,14 +64,14 @@ public class LoginUserActivity extends AppCompatActivity implements viewUpdater 
 
         Intent intent = getIntent();
 
-        this.model = new LoginModel(email, password, this);
+        this.model = LoginModel.getInstance(email, password, this);
         Task<AuthResult> signInTask = model.signInUser();
         signInTask.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    UserModel.user = model.getCurrentUser();
-                    FirebaseUser user = model.getCurrentUser();
+                    model.setUser();
+                    FirebaseUser user = model.getUser();
                     Log.d("LoginUserActivity.class", "signInWithEmail:success");
                     updateUI(user);
 
@@ -89,7 +88,7 @@ public class LoginUserActivity extends AppCompatActivity implements viewUpdater 
         });
     }
 
-    public Intent getNextIntent(){ return new Intent(this, DisplayLoginMessage.class); }
+    public Intent getNextIntent(){ return new Intent(this, DisplayHomeScreen.class); }
 
 
     // note: this function will change when you add the home screen in

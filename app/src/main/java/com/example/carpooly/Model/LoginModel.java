@@ -11,41 +11,49 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.example.carpooly.Model.*;
 import com.example.carpooly.Controller.*;
+import com.google.firebase.database.DatabaseReference;
 
 
-public class LoginModel {
-    private String email;
-    private String password;
-    private FirebaseAuth auth;
-    private Context loginContext;
-    private FirebaseUser currentUser;
+public class LoginModel extends UserModel{
+    private FirebaseUser user;
+    private static LoginModel singletonModel;
 
-    public LoginModel(String email, String pass, Context context){
-        this.email = email;
-        this.password = pass;
-        this.auth = FirebaseAuth.getInstance();
-        this.loginContext = context;
-        this.currentUser = auth.getCurrentUser();
-        Firebase.setAndroidContext(context);
+    private LoginModel(String email, String pass, Context context){
+        super(email, pass, context);
+        this.user = super.getUser();
+    }
+    public static LoginModel getInstance(String email, String pass, Context context){
+        if(singletonModel == null){
+            singletonModel = new LoginModel(email, pass, context);
+        }
+        return singletonModel;
+    }
+    public static LoginModel getInstance() throws RuntimeException{
+        // todo: error out if this is called but the model has not been initialized
+
+        if(singletonModel == null){
+            throw new RuntimeException();
+        }
+
+        return singletonModel;
     }
 
-    public FirebaseUser getCurrentUser(){
-        this.currentUser = auth.getCurrentUser();
-        return currentUser;
-    }
-
-    public void setAuth(){
-        this.auth = FirebaseAuth.getInstance();
-    }
-
-    public FirebaseAuth getAuth(){return auth;}
-
-    public String getEmail(){return email;}
-
-    //returns a task representing the user's attempt to login
     public Task<AuthResult> signInUser() {
-        return auth.signInWithEmailAndPassword(email, password);
+        return super.getAuth().signInWithEmailAndPassword(super.getEmail(), super.getPassword());
     }
 
+
+    // note that idk if this methods will actually have anything in them
+    // we may want to change them to interfaces later. idk
+    public void write(){
+    }
+
+    public void read(String fieldName){
+
+    }
+
+//    public DatabaseReference getCurrentUserPath(){
+//        return super.getDatabase().getReference("Users/").child(super.getUId());
+//    }
 
 }
