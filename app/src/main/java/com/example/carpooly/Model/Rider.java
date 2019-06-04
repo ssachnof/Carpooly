@@ -9,45 +9,30 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Nullable;
 
-public class Rider extends RideModel {
+public class Rider extends UsersSearch {
     private UsersSearch search;
     String riderName;
+    private String UId;
+    private Context context;
+    private UserInfoModel riderInfo;
 
-    public Rider(Context context, String name, String UId) {
-        super(context);
-        this.search = new UsersSearch(context);
+    public Rider(Context context, String UId) {
+        super(context, UId);
+        this.context = context;
+        this.riderInfo = super.getUserInfo();
     }
 
-    public Query getRiderInfo() {
-        System.out.println(super.getUId());
-        return super.queryCollection(super.getUId());
+    public UserInfoModel getRiderInfo(){
+        return super.getUserInfo();
     }
 
-    public void setName(QuerySnapshot queryDocumentSnapshots) {
-        this.riderName = super.getName(queryDocumentSnapshots);
-    }
-
-    private void setRiderName(String name){
-        this.riderName = name;
-        System.out.println("set name: " + riderName);
-    }
-
-
-    public void getRiderName(DocumentReference docRef) {
-        final String[] rName = new String[1];
-        getRiderInfo().addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-//                System.out.println("RIdER name: " + (String)queryDocumentSnapshots.getDocuments().get(0).get("Name"));
-                assert queryDocumentSnapshots != null;
-                setRiderName((String)queryDocumentSnapshots.getDocuments().get(0).get("Name"));
-                docRef.update("Riders", FieldValue.arrayUnion(riderName));
-
-            }
-        });
-            //TODO: THIS IS WHERE OUR COUPLING IS OCCURING!!!!!!!
-        System.out.println(this.riderName);//todo: THIS SHOULD NOT BE NULL!!!!!!!!!
+    public String getRiderId(){
+        return riderInfo.getUId();
     }
 }

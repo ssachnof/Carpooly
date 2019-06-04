@@ -1,5 +1,6 @@
 package com.example.carpooly.Controller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.nfc.Tag;
@@ -26,6 +27,8 @@ import android.widget.TextView;
 
 
 import com.example.carpooly.Model.UserInfoModel;
+import com.example.carpooly.Model.UserModel;
+import com.example.carpooly.Model.UsersSearch;
 import com.example.carpooly.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,70 +67,50 @@ public class AccountControl extends AppCompatActivity {
         this.privacyAdapter = new ArrayAdapter<>(this, R.layout.privacy_view, privacyArray);
         Spinner privacyOptions = ((Spinner) findViewById(R.id.PrivacyModeActive));
         privacyOptions.setAdapter(privacyAdapter);
-        this.model = new UserInfoModel(this);
-        final DocumentReference userDataRef = model.getDatabase().collection("Users").
-                document(model.getUId());
-        userDataRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                try {
-                    Map<String, Object> userData = model.read(documentSnapshot, e);
-                    String email = (String)userData.get("Email");
-                    String name = (String)userData.get("Name");
-                    float rating = Float.parseFloat((String)userData.get("Rating"));
-                    String phoneNumber = (String)userData.get("Phone");
-                    String privacyMode = (String)userData.get("PrivacyMode");
-                    setViewObjects(email, name, rating, phoneNumber, privacyMode);
-                    ImageView profilePicture = ((ImageView)findViewById(R.id.ProfilePicture));
-                    profilePicture.setImageResource(R.drawable.carpooly3);
+        UserInfoModel userInfo = UserInfoModel.read(UserModel.getUser().getUid(), this);
+        String name = userInfo.getName();
+        String email  = userInfo.getEmail();
+        Float rating = Float.parseFloat(userInfo.getUserRating());
+        String phone = userInfo.getPhoneNumber();
+        String privacyMode = userInfo.getPrivacyMode();
+        setViewObjects(email, name, rating, phone, privacyMode);
+
+//        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+//                findViewById(R.id.navbar);
+//
+//        bottomNavigationView.setSelectedItemId(R.id.action_account);
+//
+//        bottomNavigationView.setOnNavigationItemSelectedListener(
+//                new BottomNavigationView.OnNavigationItemSelectedListener() {
+//                    @Override
+//                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                        switch (item.getItemId()) {
+//                            case R.id.action_home:
+//                                openHomePage();
+//
+//                            case R.id.action_myRides:
+//
+//                            case R.id.action_account:
+//
+//
+//                        }
+//                        return true;
+//                    }
+//                });
 
 
-                }
-                catch (RuntimeException e1){
-                    System.out.println("Unable to listen to user data!!!!");
-                    e1.printStackTrace();
-                }
-
-
-            }
-        });
-
-
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.navbar);
-
-        bottomNavigationView.setSelectedItemId(R.id.action_account);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_home:
-                                openHomePage();
-
-                            case R.id.action_myRides:
-
-                            case R.id.action_account:
-
-
-                        }
-                        return true;
-                    }
-                });
-
-
-        privacyOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                userDataRef.update("PrivacyMode", adapterView.getItemAtPosition(i).toString());
-            }
-
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                return;
-            }
-        });
+//        privacyOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                userDataRef.update("PrivacyMode", adapterView.getItemAtPosition(i).toString());
+//            }
+//
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//                return;
+//            }
+//        });
     }
 
+//    private List<UserInfoModel> getUserInfo(Context context, )
     public void setViewObjects(String email, String name, float rating,
                                   String phone, String privacyMode){
         TextView userEmail = ((TextView) findViewById(R.id.Email));

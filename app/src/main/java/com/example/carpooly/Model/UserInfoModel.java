@@ -1,7 +1,7 @@
 package com.example.carpooly.Model;
 
 import android.content.Context;
-import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 /*import com.google.gson.Gson;
@@ -12,39 +12,27 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;*/
 
-import com.example.carpooly.DatabaseReader;
-import com.example.carpooly.DatabaseWriter;
-import com.example.carpooly.HashMapInitializer;
-import com.example.carpooly.Search;
-import com.example.carpooly.UserObject;
-import com.firebase.ui.auth.data.model.User;
+import com.firebase.client.Firebase;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.google.firebase.storage.StorageReference;
+import java.util.Objects;
 
 import javax.annotation.Nullable;
 
@@ -58,19 +46,19 @@ public class UserInfoModel extends UserModel {
     private String phoneNumber;
     private String profilePicture;
 
-    private FirebaseUser user;
+    private static FirebaseUser user = getUser();
     private FirebaseStorage storage;
-    private FirebaseFirestore database = Database.getDBInstance(); // replaced line below - testing
-    private DocumentReference currentUserInfoDocRef;
-    final private CollectionReference usersCollectionRef = database.collection("Users");
+    private static FirebaseFirestore database = Database.getDBInstance(); // replaced line below - testing
+    final private static CollectionReference usersCollectionRef = database.collection("Users");
+    private static DocumentReference currentUserInfoDocRef = usersCollectionRef.document(user.getUid());
+    //why is this an instance variable here?
     final private CollectionReference ridesCollectionRef = database.collection("Rides");
     private String userRating;
     private String privacyMode;
 
-    public UserInfoModel(String email, String pass, String confirm_pass, String phoneNumber,
+    public UserInfoModel(String email, String pass, String phoneNumber,
                          String firstName, String lastName, Context context) {
         super(email, pass, context);
-        this.confirm_pass = confirm_pass;
         this.name = firstName + " " + lastName;//this should probably be done in controller!!!!!
         this.phoneNumber = phoneNumber;
         this.profilePicture = getDefaultProfilePicture();
@@ -79,17 +67,25 @@ public class UserInfoModel extends UserModel {
         this.privacyMode = "Private";
         this.userRating = "3.0";
         this.currentUserInfoDocRef = database.collection("Users").document(user.getUid());
+        Firebase.setAndroidContext(context);
 
     }
 
-    public UserInfoModel(Context context){
-        super(context);
-        this.user = super.getAuth().getCurrentUser();
+    public UserInfoModel(String email, String pass, String phoneNumber,
+                         String firstName, String lastName, String privacyMode, String userRating,
+                         Context context) {
+        super(email, pass, context);
+        this.name = firstName + " " + lastName;//this should probably be done in controller!!!!!
+        this.phoneNumber = phoneNumber;
+        this.profilePicture = getDefaultProfilePicture();
+        this.storage = Database.getStorageInstance();
+        this.user = getUser();
+        this.privacyMode = privacyMode;
+        this.userRating = userRating;
         this.currentUserInfoDocRef = database.collection("Users").document(user.getUid());
+        Firebase.setAndroidContext(context);
 
     }
-
-    public UserInfoModel(){}
 
     public Task<AuthResult> registerUser() {
         return super.getAuth().createUserWithEmailAndPassword(super.getEmail(), super.getPassword());
@@ -112,19 +108,34 @@ public class UserInfoModel extends UserModel {
         userData.put("Phone", this.phoneNumber);
         userData.put("PrivacyMode", this.privacyMode);
         userData.put("UserId", super.getUId());
+        userData.put("Password", super.getPassword());
         database.collection("Users").document(this.user.getUid()).
                 set(userData, SetOptions.merge());//set options.merge prevents documents from being overwritten
     }
 
-    public ArrayList<UserInfoModel> read(){
-        Map<String, Object> userData = currentUserInfoDocRef.get().getResult().getData();
-        this.name = (String)userData.get("Name");
-        this.userRating = (String)userData.get("Rating");
-        this.phoneNumber = (String)userData.get("Phone");
-        this.privacyMode = (String)userData.get("PrivacyMode");
-        ArrayList<UserInfoModel> output = new ArrayList<>();
-        output.add(this);
-        return output;
+    public static UserInfoModel read(String UId, Context context){
+//        Map<String, Object> userData = currentUserInfoDocRef.get().getResult().getData();
+        DocumentReference docRef = usersCollectionRef.document(UId);
+        Map<String, Object> userData = new HashMap<>();
+        assert(usersCollectionRef != null);
+        System.out.println(usersCollectionRef.document(UId).getPath());
+        System.out.println(currentUserInfoDocRef.getPath());
+        Task<DocumentSnapshot> snapshotTask = currentUserInfoDocRef.get();
+        while(! snapshotTask.isSuccessful()){
+        }
+        userData.putAll(snapshotTask.getResult().getData());
+        System.out.println(userData.keySet());
+        System.out.println(userData.entrySet());
+        String name = (String)userData.get("Name");
+        System.out.println("Name: " + name);
+        String firstName = name.split(" ")[0];
+        String lastName = name.split(" ")[1];
+        String userRating = (String)userData.get("Rating");
+        String phoneNumber = (String)userData.get("Phone");
+        String privacyMode = (String)userData.get("PrivacyMode");
+        String email = (String)userData.get("Email");
+        String password = (String)userData.get("Password");
+        return new UserInfoModel(email, password, phoneNumber, firstName, lastName, privacyMode, userRating, context);
     }
 
     public Map<String, Object> read(@Nullable DocumentSnapshot documentSnapshot,
@@ -143,8 +154,14 @@ public class UserInfoModel extends UserModel {
         }
     }
 
-    public CollectionReference getUsersCollection(){return usersCollectionRef;}
+    public static CollectionReference getUsersCollection(){return usersCollectionRef;}
     public CollectionReference getRidesCollectionRef(){return ridesCollectionRef;}
     public void setName(String name){this.name = name;}
+    public String getUserRating(){
+        return this.userRating;
+    }
+    public String getPrivacyMode(){
+        return this.privacyMode;
+    }
 
 }

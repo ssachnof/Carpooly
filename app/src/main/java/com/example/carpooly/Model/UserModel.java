@@ -16,40 +16,40 @@ public abstract class UserModel {
 
     private String email;
     private String password;
-    private FirebaseAuth auth;
-    private FirebaseUser user;
+    private static FirebaseAuth auth;
+    private static FirebaseUser user;
     private FirebaseFirestore database;
     public UserModel(String email, String password, Context context) {
         this.email = email;
         this.password = password;
-        this.auth = getAuth();
+        auth = getAuth();
         this.database = getDatabase();
-        this.user = auth.getCurrentUser();
+        user = auth.getCurrentUser();
         Firebase.setAndroidContext(context);
     }
 
     public UserModel(Context context){
-        this.auth = getAuth();
+        auth = getAuth();
         this.database = getDatabase();
-        this.user = auth.getCurrentUser();
+        user = auth.getCurrentUser();
         //todo: we should probably read from the db here and set fields!!!!!
         Firebase.setAndroidContext(context);
     }
 
     //this only exists because a build failed
     public UserModel(){
-        this.auth = getAuth();
-    this.user = auth.getCurrentUser();}
+        auth = getAuth();
+    user = auth.getCurrentUser();}
 
-    public void setUser(){
-        this.auth = getAuth();
-        this.user = auth.getCurrentUser();
+    private static void setUser(){
+        auth = getAuth();
+        user = auth.getCurrentUser();
     }
 
     public String getEmail(){return email;}
     public String getPassword(){return password;}
     public String getUId(){return user.getUid();}
-    public FirebaseUser getUser(){
+    public static FirebaseUser getUser(){
         setUser();
         return user;
     }
@@ -59,8 +59,8 @@ public abstract class UserModel {
         return this.database;
     }
 
-    public FirebaseAuth getAuth(){
-        this.auth = Database.getAuthInstance();
+    public static FirebaseAuth getAuth(){
+        auth = Database.getAuthInstance();
         return auth;
     }
 

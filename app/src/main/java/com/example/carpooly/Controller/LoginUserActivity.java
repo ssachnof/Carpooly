@@ -70,10 +70,8 @@ public class LoginUserActivity extends AppCompatActivity implements viewUpdater 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    model.setUser();
-                    FirebaseUser user = model.getUser();
                     Log.d("LoginUserActivity.class", "signInWithEmail:success");
-                    updateUI(user);
+                    updateUI(model.getUser());
 
                 }
                 else{

@@ -39,13 +39,11 @@ public class OpenRegPageController extends AppCompatActivity implements viewUpda
         String phoneNumber = extractor.extractElement(findViewById(R.id.PhoneNumber));
         String firstName = extractor.extractElement(findViewById(R.id.FirstName));
         String lastName = extractor.extractElement(findViewById(R.id.LastName));
-        this.model = new UserInfoModel(email, password, confirmPassword, phoneNumber, firstName, lastName, this);
         if (!validatePassword(password, confirmPassword)){
             updateUI(null);
         }
         else {
-            this.model = new UserInfoModel(email, password, confirmPassword, phoneNumber,
-                                                firstName, lastName, this);
+            this.model = new UserInfoModel(email, password, phoneNumber, firstName, lastName, this);
             //model.setAuth();
             Task<AuthResult> regTask = model.registerUser();
             regTask.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

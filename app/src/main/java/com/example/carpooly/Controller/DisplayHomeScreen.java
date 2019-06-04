@@ -32,17 +32,10 @@ public class DisplayHomeScreen extends AppCompatActivity {
         setContentView(R.layout.home_screen);
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-
-        this.rideModel = new RideModel(this);
-        Task<QuerySnapshot> task = rideModel.getRidesCollectionRef().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                List<RideModel> rideDetails = rideModel.getRides(queryDocumentSnapshots);
-                for (RideModel ride : rideDetails){
-                    addRideToPage(ride);
-                }
-            }
-        });
+        List<RideModel> rides = RideModel.getRides(this);
+        for (RideModel ride : rides){
+            addRideToPage(ride);
+        }
     }
 
     public void openAccountPage(View view) {
@@ -61,15 +54,6 @@ public class DisplayHomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("adding user for ride id: " + ride.getRideId());
-//                rider.getUsersCollection().addSnapshotListener(new EventListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-//                        String name =(String)queryDocumentSnapshots.getDocuments().get(0).get("Name");
-//                        System.out.println("RIDER2: " + name);
-//                        ride.addRider();
-//                        rider.getName();
-//                    }
-//                });
                     ride.addRider();
             }
         });
@@ -92,7 +76,7 @@ public class DisplayHomeScreen extends AppCompatActivity {
         cal.setTime(departuretime);
         String hours = Integer.toString(cal.get(Calendar.HOUR_OF_DAY));
         String minutes = Integer.toString(cal.get(Calendar.MINUTE));
-        List<String> riders = ride.getRiders();
+        List<Rider> riders = ride.getRiders();
 //        for (String rider : riders){
 //            System.out.println("RIDER NAME: " + rider);
 //        }
@@ -103,8 +87,8 @@ public class DisplayHomeScreen extends AppCompatActivity {
         text += "Departure Date: " + month + "/" + day + "/" + year + "\n";
         text += "Departure Time: " + hours + ":" + minutes + "\n";
         text+= "Riders: ";
-        for(String rider : riders){
-            text += rider;
+        for(Rider rider : riders){
+            text += rider.getRiderId();
         }
         tv.setText(text);
 

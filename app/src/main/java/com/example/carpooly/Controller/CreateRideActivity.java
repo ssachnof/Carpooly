@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.carpooly.Model.RideModel;
 import com.example.carpooly.Model.UsersSearch;
@@ -34,35 +35,20 @@ public class CreateRideActivity extends AppCompatActivity {
 
 
     public void createNewRide(View view){
-        this.usersSearcher = new UsersSearch(this);
+        String destination = ((EditText) findViewById(R.id.DestinationCity)).getText().toString();
         SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
-        EditText depDateField = ((EditText)findViewById(R.id.DepartureDate));
-        EditText depTimeField = ((EditText)findViewById(R.id.DepartureTime));
-        final EditText destination = ((EditText) findViewById(R.id.DestinationCity));
-
+        EditText depDate = ((EditText)findViewById(R.id.DepartureDate));
+        EditText depTime = ((EditText)findViewById(R.id.DepartureTime));
         try {
-            final Date departureDate = dateFormatter.parse(depDateField.getText().toString());
-            dateFormatter = new SimpleDateFormat("HH:mm");
-            final Date departureTime = dateFormatter.parse(depTimeField.getText().toString());
-            final Context activityContext = this;
-            ListenerRegistration driversQuery = usersSearcher.queryCollection(usersSearcher.getUId()).addSnapshotListener(
-                    new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                            String driverName = usersSearcher.getName(queryDocumentSnapshots);
-                            RideModel newRideModel = new RideModel(departureDate, departureTime, driverName,
-                                    destination.getText().toString(), activityContext);
-                            newRideModel.write();
-                        }
-                    }
-            );
-            Intent intent = new Intent(this, DisplayHomeScreen.class);
-            startActivity(intent);
-
+            Date departureDate = dateFormatter.parse(depDate.getText().toString());
+            Date departureTime = dateFormatter.parse(depTime.getText().toString());
+            RideModel rideModel = new RideModel(departureDate, departureTime, destination, this);
+            rideModel.write();
         }
-        catch(ParseException e){
-            System.out.println("ERROR FOUND WHILE PARSING!!!!");
+        catch(ParseException e) {
             e.printStackTrace();
         }
+        Intent intent = new Intent(this, DisplayHomeScreen.class);
+        startActivity(intent);
     }
 }

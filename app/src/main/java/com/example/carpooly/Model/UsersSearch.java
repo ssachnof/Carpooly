@@ -5,35 +5,65 @@ import android.content.Context;
 import com.example.carpooly.Search;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UsersSearch extends UserInfoModel implements Search {
-    private final CollectionReference usersRef = super.getUsersCollection();
+import javax.annotation.Nullable;
+
+public class UsersSearch {
+    private final CollectionReference usersRef = UserInfoModel.getUsersCollection();
     private String driverName;
-    public UsersSearch(Context context){
-        super(context);
+    private Context context;
+    private UserInfoModel userInfo;
+    public UsersSearch(Context context, String UId){
+        this.context = context;
+        this.userInfo = getUserData(UId);
+
     }
     public UsersSearch(){super();}
-//    public Task<QuerySnapshot> queryCollection() {
-//        List<DocumentSnapshot> userDocuments=  usersRef.get().getResult().getDocuments();
-//        ArrayList<Map<String, Object>> usersData = new ArrayList<>();
-//
-//        for (DocumentSnapshot userDoc : userDocuments){
-//            usersData.add(userDoc.getData());
-//        }
-//        return usersData;
-//    }
-    //searches for a specific user
-    public Query queryCollection(String UId){
-        Query findUserQuery = usersRef.whereEqualTo("UserId", UId);
-        return findUserQuery;
+
+
+    private UserInfoModel getUserData(String UId){
+        DocumentReference userDocRef = usersRef.document(UId);
+        Map<String, Object> userData = new HashMap<>();
+        userDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                userData.putAll(documentSnapshot.getData());
+            }
+        });
+        System.out.println("Map: " + userData.entrySet());
+        String email = (String)userData.get("Email");
+        String name = (String)userData.get("Name");
+        String phoneNumber = (String)userData.get("Phone");
+        System.out.println("Name: "+ name);
+        String firstName = name.split(" ")[0];
+        String lastName = name.split(" ")[1];
+        String password = (String)userData.get("Password");
+        assert (context != null);
+        return new UserInfoModel(email, password, phoneNumber, firstName, lastName, context);
     }
+
+    public UserInfoModel getUserInfo(){
+        assert (userInfo != null);
+        return userInfo;
+    }
+
+//    //searches for a specific user
+//    public Query queryCollection(String UId){
+//        Query findUserQuery = usersRef.whereEqualTo("UserId", UId);
+//        return findUserQuery;
+//    }
 
     public CollectionReference getRef(){return usersRef;}
 
@@ -42,11 +72,12 @@ public class UsersSearch extends UserInfoModel implements Search {
 //        return userData;
 //    }
 
-    public String getName(QuerySnapshot queryDocumentSnapshots){
-        System.out.println("keys: " + queryDocumentSnapshots.getDocuments().get(0).getData().keySet());
-        String driverName = (String)queryDocumentSnapshots.getDocuments().get(0).get("Name");
-        return driverName;
-
-
-
-    }}
+//    public String getName(QuerySnapshot queryDocumentSnapshots){
+//        System.out.println("keys: " + queryDocumentSnapshots.getDocuments().get(0).getData().keySet());
+//        String driverName = (String)queryDocumentSnapshots.getDocuments().get(0).get("Name");
+//        return driverName;
+//
+//
+//
+//    }
+    }
