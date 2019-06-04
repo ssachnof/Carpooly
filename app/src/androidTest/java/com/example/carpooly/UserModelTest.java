@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public clasUserModelTest {
+public class UserModelTest {
 
     @Test
     public void getEmail() {
