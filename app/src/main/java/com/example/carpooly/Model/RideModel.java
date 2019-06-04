@@ -3,6 +3,7 @@ package com.example.carpooly.Model;
 import android.content.Context;
 
 import com.firebase.client.Firebase;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -116,13 +117,19 @@ public class RideModel{
     public static List<RideModel> getRides(Context context){
         List<RideModel> rides = new ArrayList<>();
         List<DocumentSnapshot> rideDocuments = new ArrayList<>();
-        rideCollectionRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                queryDocumentSnapshots.getDocuments();
-                rideDocuments.addAll(queryDocumentSnapshots.getDocuments());
-            }
-        });
+        Task<QuerySnapshot> snapshot = getRideCollectionRef().get();
+        while(!snapshot.isSuccessful()){
+
+        }
+        List<DocumentSnapshot> docs =  snapshot.getResult().getDocuments();
+        for (DocumentSnapshot )
+//        rideCollectionRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//                queryDocumentSnapshots.getDocuments();
+//                rideDocuments.addAll(queryDocumentSnapshots.getDocuments());
+//            }
+//        });
         for (DocumentSnapshot rideDoc : rideDocuments){
             rides.add(read(rideDoc.getReference(), context));
         }
