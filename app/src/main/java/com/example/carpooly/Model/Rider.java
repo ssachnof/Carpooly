@@ -47,5 +47,7 @@ public class Rider extends RideModel {
 
             }
         });
+            //TODO: THIS IS WHERE OUR COUPLING IS OCCURING!!!!!!!
+        System.out.println(this.riderName);//todo: THIS SHOULD NOT BE NULL!!!!!!!!!
     }
 }
