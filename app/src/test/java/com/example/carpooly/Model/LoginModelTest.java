@@ -10,6 +10,11 @@ public class LoginModelTest {
     public void signInUser() {
     }
 
+    @Test(expected= RuntimeException.class)
+    public void checkLoginModelException() {
+        LoginModel.getInstance();
+    }
+    
     @Test
     public void write() {
     }
