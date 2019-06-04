@@ -118,8 +118,6 @@ public class UserInfoModel extends UserModel {
         DocumentReference docRef = usersCollectionRef.document(UId);
         Map<String, Object> userData = new HashMap<>();
         assert(usersCollectionRef != null);
-        System.out.println(usersCollectionRef.document(UId).getPath());
-        System.out.println(currentUserInfoDocRef.getPath());
         Task<DocumentSnapshot> snapshotTask = currentUserInfoDocRef.get();
         while(! snapshotTask.isSuccessful()){
         }
@@ -160,6 +158,7 @@ public class UserInfoModel extends UserModel {
     public String getUserRating(){
         return this.userRating;
     }
+    public static DocumentReference getCurrentUserInfoDocRef(){return currentUserInfoDocRef;}
     public String getPrivacyMode(){
         return this.privacyMode;
     }

@@ -75,39 +75,39 @@ public class AccountControl extends AppCompatActivity {
         String privacyMode = userInfo.getPrivacyMode();
         setViewObjects(email, name, rating, phone, privacyMode);
 
-//        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-//                findViewById(R.id.navbar);
-//
-//        bottomNavigationView.setSelectedItemId(R.id.action_account);
-//
-//        bottomNavigationView.setOnNavigationItemSelectedListener(
-//                new BottomNavigationView.OnNavigationItemSelectedListener() {
-//                    @Override
-//                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                        switch (item.getItemId()) {
-//                            case R.id.action_home:
-//                                openHomePage();
-//
-//                            case R.id.action_myRides:
-//
-//                            case R.id.action_account:
-//
-//
-//                        }
-//                        return true;
-//                    }
-//                });
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navbar);
+
+        bottomNavigationView.setSelectedItemId(R.id.action_account);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_home:
+                                openHomePage();
+
+                            case R.id.action_myRides:
+
+                            case R.id.action_account:
 
 
-//        privacyOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                userDataRef.update("PrivacyMode", adapterView.getItemAtPosition(i).toString());
-//            }
-//
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//                return;
-//            }
-//        });
+                        }
+                        return true;
+                    }
+                });
+
+
+        privacyOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                UserInfoModel.getCurrentUserInfoDocRef().update("PrivacyMode", adapterView.getItemAtPosition(i).toString());
+            }
+
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                return;
+            }
+        });
     }
 
 //    private List<UserInfoModel> getUserInfo(Context context, )
