@@ -35,7 +35,6 @@ public class DatabaseTest2 {
         FirebaseStorage st = Database.getStorageInstance();
         FirebaseStorage st2 = Database.getStorageInstance();
         assertNotNull(st);
-        assertEquals(1,2);
         assertNotNull(st2);
         assertSame(st, st2);
     }
