@@ -10,7 +10,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.InstrumentationRegistry.getContext;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -33,6 +36,15 @@ public class LoginModelTest {
     public void write() {
     }
 
+    @Test
+    public void goodLoginModelTest() {
+        Context context = getContext();
+        LoginModel l = LoginModel.getInstance("mammoth11@comcast.net", "test1234", context);
+        LoginModel l2 = LoginModel.getInstance();
+        assertNotNull(l);
+        assertNotNull(l2);
+        assertSame(l, l2);
+    }
     @Test
     public void read() {
     }
