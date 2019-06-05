@@ -128,7 +128,7 @@ public class UserInfoModel extends UserModel {
     }
 
     public Map<String, Object> read(@Nullable DocumentSnapshot documentSnapshot,
-                     @Nullable FirebaseFirestoreException e){
+                                    @Nullable FirebaseFirestoreException e){
         if (e != null){
             Log.w(TAG,"Listen Failed!");
             throw new IllegalArgumentException();

@@ -45,7 +45,7 @@ public class OpenRegPageController extends AppCompatActivity implements viewUpda
         }
         else {
             this.model = new UserInfoModel(email, password, confirmPassword, phoneNumber,
-                                                firstName, lastName, this);
+                    firstName, lastName, this);
             //model.setAuth();
             Task<AuthResult> regTask = model.registerUser();
             regTask.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

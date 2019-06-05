@@ -128,7 +128,7 @@ public class AccountControl extends AppCompatActivity {
     }
 
     public void setViewObjects(String email, String name, float rating,
-                                  String phone, String privacyMode){
+                               String phone, String privacyMode){
         TextView userEmail = ((TextView) findViewById(R.id.Email));
         userEmail.setText(email);
 

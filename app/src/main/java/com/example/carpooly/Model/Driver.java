@@ -2,7 +2,11 @@ package com.example.carpooly.Model;
 
 import android.content.Context;
 
+<<<<<<< HEAD
 public class Driver extends UserInfoModel {
+=======
+public class Driver extends RideModel {
+>>>>>>> bdd1cda8f9b7a9acdcc99039cd7be79a4ab1abba
     private String driverName;
     private UsersSearch search;
 
@@ -17,4 +21,8 @@ public class Driver extends UserInfoModel {
 
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> bdd1cda8f9b7a9acdcc99039cd7be79a4ab1abba
