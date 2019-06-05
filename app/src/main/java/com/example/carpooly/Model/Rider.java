@@ -2,11 +2,6 @@ package com.example.carpooly.Model;
 
 import android.content.Context;
 
-<<<<<<< HEAD
-public class Rider extends UserInfoModel {
-    private UsersSearch search;
-    public Rider(Context context){
-=======
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
@@ -21,17 +16,10 @@ public class Rider extends RideModel {
     String riderName;
 
     public Rider(Context context, String name, String UId) {
->>>>>>> bdd1cda8f9b7a9acdcc99039cd7be79a4ab1abba
         super(context);
         this.search = new UsersSearch(context);
     }
 
-<<<<<<< HEAD
-    public String getRiderName(String UId){
-        return search.getName(search.queryCollection(UId).get().getResult());
-    }
-
-=======
     public Query getRiderInfo() {
         System.out.println(super.getUId());
         return super.queryCollection(super.getUId());
@@ -62,5 +50,4 @@ public class Rider extends RideModel {
         //TODO: THIS IS WHERE OUR COUPLING IS OCCURING!!!!!!!
         System.out.println(this.riderName);//todo: THIS SHOULD NOT BE NULL!!!!!!!!!
     }
->>>>>>> bdd1cda8f9b7a9acdcc99039cd7be79a4ab1abba
 }

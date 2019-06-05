@@ -2,14 +2,7 @@ package com.example.carpooly.Model;
 
 import android.content.Context;
 
-<<<<<<< HEAD
-import com.firebase.ui.auth.data.model.User;
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-=======
-import com.google.firebase.Timestamp;
->>>>>>> bdd1cda8f9b7a9acdcc99039cd7be79a4ab1abba
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -17,7 +10,6 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,12 +44,6 @@ public class RideModel extends UsersSearch{
         this.rideCollectionRef = super.getDatabase().collection("Rides");
         this.rideDocumentReference = rideCollectionRef.document();
         this.rideId = rideDocumentReference.getId();
-<<<<<<< HEAD
-    }
-
-    public RideModel(String driverId, String driverName, Date departureDate, Date departureTime, String destination,
-                     int maxCapacity, String rideId){
-=======
         this.riders = new ArrayList<>();
         this.context = context;
     }
@@ -65,7 +51,6 @@ public class RideModel extends UsersSearch{
     public RideModel(String driverId, String driverName, Date departureDate, Date departureTime, String destination,
                      int maxCapacity, String rideId, List<String> riders, Context context){
         super(context);
->>>>>>> bdd1cda8f9b7a9acdcc99039cd7be79a4ab1abba
         this.driver = driverId;
         this.driverDisplayName = driverName;
         this.departureDate = departureDate;
@@ -73,13 +58,10 @@ public class RideModel extends UsersSearch{
         this.maxCapacity = maxCapacity;
         this.destination = destination;
         this.rideId = rideId;
-<<<<<<< HEAD
-=======
         this.riders = riders;
         this.rideCollectionRef = super.getDatabase().collection("Rides");
         this.rideDocumentReference = rideCollectionRef.document(rideId);
         this.context = context;
->>>>>>> bdd1cda8f9b7a9acdcc99039cd7be79a4ab1abba
     }
     public RideModel(Context context){
         super(context);
@@ -95,10 +77,7 @@ public class RideModel extends UsersSearch{
         rideData.put("DepartureTime", departureTime);
         rideData.put("Destination", destination);
         rideData.put("RideId", rideId);
-<<<<<<< HEAD
-=======
         rideData.put("Riders", riders);
->>>>>>> bdd1cda8f9b7a9acdcc99039cd7be79a4ab1abba
         rideDocumentReference.set(rideData, SetOptions.merge());
     }
 
@@ -124,15 +103,11 @@ public class RideModel extends UsersSearch{
         Date departureTime = ((Timestamp)rideData.get("DepartureTime")).toDate();
         String destination = (String)rideData.get("Destination");
         String rideId = (String)rideData.get("RideId");
-<<<<<<< HEAD
-        return new RideModel(driverId, driverName, departureDate, departureTime, destination, maxCapacity, rideId);
-=======
         List<String> riders = (List<String>)rideData.get("Riders");
         if (this.context == null){
             throw new NullPointerException();
         }
         return new RideModel(driverId, driverName, departureDate, departureTime, destination, maxCapacity, rideId, riders, context);
->>>>>>> bdd1cda8f9b7a9acdcc99039cd7be79a4ab1abba
 
     }
 
@@ -155,14 +130,6 @@ public class RideModel extends UsersSearch{
     public Date getDepartureDate(){return this.departureDate;}
     public Date getDepartureTime(){return this.departureTime;}
     public String getRideId(){return rideId;}
-<<<<<<< HEAD
-
-//    @Override
-//    public ArrayList<UserInfoModel> read(){
-//
-//
-//    }
-=======
     public CollectionReference getRideCollectionRef(){return rideCollectionRef;}
     public void addRider(){
         Rider rider = new Rider(context, super.getName(), super.getUId());
@@ -171,5 +138,4 @@ public class RideModel extends UsersSearch{
 //        rideDocumentReference.update("Riders", FieldValue.arrayUnion(name));
     }
     public List<String> getRiders(){return riders;}//will eventually want to return rider objects
->>>>>>> bdd1cda8f9b7a9acdcc99039cd7be79a4ab1abba
 }
