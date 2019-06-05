@@ -110,7 +110,6 @@ public class AccountControl extends AppCompatActivity {
 
                             case R.id.action_account:
 
-
                         }
                         return true;
                     }

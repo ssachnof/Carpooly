@@ -2,6 +2,7 @@ package com.example.carpooly.Controller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
