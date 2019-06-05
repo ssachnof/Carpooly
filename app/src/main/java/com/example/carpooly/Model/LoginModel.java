@@ -30,11 +30,10 @@ public class LoginModel extends UserModel{
     }
     public static LoginModel getInstance(){
         // todo: error out if this is called but the model has not been initialized
-        /*
+
         if(singletonModel == null){
-            throw RuntimeException;
+            throw new RuntimeException();
         }
-        */
         return singletonModel;
     }
 
