@@ -37,7 +37,6 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firestore.admin.v1beta1.IndexFieldOrBuilder;
 
 import org.w3c.dom.Text;
 
@@ -130,7 +129,7 @@ public class AccountControl extends AppCompatActivity {
     }
 
     public void setViewObjects(String email, String name, float rating,
-                                  String phone, String privacyMode){
+                               String phone, String privacyMode){
         TextView userEmail = ((TextView) findViewById(R.id.Email));
         userEmail.setText(email);
 
