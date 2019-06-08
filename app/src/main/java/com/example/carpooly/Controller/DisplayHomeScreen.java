@@ -1,12 +1,12 @@
 package com.example.carpooly.Controller;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,9 +46,32 @@ public class DisplayHomeScreen extends AppCompatActivity {
                 }
             }
         });
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navbar);
+
+        bottomNavigationView.setSelectedItemId(R.id.action_account);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_home:
+
+                            case R.id.action_myRides:
+
+                            case R.id.action_account:
+                                openAccountPage();
+
+
+                        }
+                        return true;
+                    }
+                });
     }
 
-    public void openAccountPage(View view) {
+    public void openAccountPage() {
         Intent intent = new Intent(this, AccountControl.class);
         startActivity(intent);
     }
@@ -64,7 +87,6 @@ public class DisplayHomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("adding user for ride id: " + ride.getRideId());
-
 //                rider.getUsersCollection().addSnapshotListener(new EventListener<QuerySnapshot>() {
 //                    @Override
 //                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
