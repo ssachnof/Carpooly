@@ -97,6 +97,7 @@ public class DisplayHomeScreen extends AppCompatActivity {
 //                    }
 //                });
                 ride.addRider();
+                reloadPage();
             }
         });
         layout.addView(button);
@@ -139,6 +140,11 @@ public class DisplayHomeScreen extends AppCompatActivity {
 
     public void openCreateNewRidePage(View view) {
         Intent intent = new Intent(this, CreateRideActivity.class);
+        startActivity(intent);
+    }
+
+    public void reloadPage(){
+        Intent intent = new Intent(this, DisplayHomeScreen.class);
         startActivity(intent);
     }
 }
