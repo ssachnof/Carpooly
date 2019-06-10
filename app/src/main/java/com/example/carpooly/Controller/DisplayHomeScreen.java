@@ -76,7 +76,7 @@ public class DisplayHomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void addRideToPage(RideModel ride){
+    public void addRideToPage(final RideModel ride){
         LinearLayout layout = ((LinearLayout)findViewById(R.id.RideDetails));
         TextView tv = new TextView(this);
         rideDetailsToText(ride, tv);

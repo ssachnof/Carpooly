@@ -97,6 +97,7 @@ public class RideModel extends UsersSearch{
     private RideModel getRide(DocumentSnapshot rideDocument, Context context){
         Map<String, Object> rideData = rideDocument.getData();
         String driverName = (String)rideData.get("DriverName");
+        System.out.println(driverName);
         String driverId = (String)rideData.get("DriverId");
         long mc = (int)(long)rideData.get("MaxCapacity");
         Date departureDate = ((Timestamp)rideData.get("DepartureDate")).toDate();
