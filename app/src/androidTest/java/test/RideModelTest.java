@@ -1,4 +1,4 @@
-package com.example;
+package test;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -23,4 +23,13 @@ public class RideModelTest {
     @Test
     public void setDriverDisplayName() {
     }
+
+    @Test(expected = NullPointerException.class)
+    public void readTestBadContext(){
+        RideModel rm = new RideModel(null, null,  "Joe Smith",
+                "LA", null);
+        rm.read();
+    }
+
+
 }
