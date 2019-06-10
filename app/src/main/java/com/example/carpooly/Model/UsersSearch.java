@@ -19,8 +19,8 @@ public class UsersSearch extends UserInfoModel implements Search {
     public UsersSearch(Context context){
         super(context);
     }
-    public UsersSearch(){}
-//    public Task<QuerySnapshot> queryCollection() {
+    public UsersSearch(){super();}
+    //    public Task<QuerySnapshot> queryCollection() {
 //        List<DocumentSnapshot> userDocuments=  usersRef.get().getResult().getDocuments();
 //        ArrayList<Map<String, Object>> usersData = new ArrayList<>();
 //
@@ -37,15 +37,14 @@ public class UsersSearch extends UserInfoModel implements Search {
 
     public CollectionReference getRef(){return usersRef;}
 
-//    public Task<QuerySnapshot> getDriverName(String UId){
+//    public Task<QuerySnapshot> getName(String UId){
 //        Task<QuerySnapshot> userData = queryCollection(UId);
 //        return userData;
 //    }
 
-    public String getDriverName(QuerySnapshot queryDocumentSnapshots){
+    public String getName(QuerySnapshot queryDocumentSnapshots){
         System.out.println("keys: " + queryDocumentSnapshots.getDocuments().get(0).getData().keySet());
         String driverName = (String)queryDocumentSnapshots.getDocuments().get(0).get("Name");
-        System.out.println("Driver Name 2: " + driverName);
         return driverName;
 
 

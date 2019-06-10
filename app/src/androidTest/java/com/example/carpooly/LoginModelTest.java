@@ -1,4 +1,4 @@
-package com.example.carpooly.Model;
+package com.example.carpooly;
 
 import org.junit.Test;
 
